@@ -1,0 +1,69 @@
+SQL> SHOW USER
+USER은 "CODELAB"입니다
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> CREATE TABLE mvcboard(
+  2  bid NUMBER(4) PRIMARY KEY,
+  3  bName VARCHAR2(20),
+  4  bTitle VARCHAR2(100),
+  5  bContent VARCHAR2(300),
+  6  bDate DATE DEFAULT SYSDATE,
+  7  bHit NUMBER(4) DEFAULT 0,
+  8  bGroup NUMBER(4),
+  9  bStep NUMBER(4),
+ 10  bIndent NUMBER(4)
+ 11  );
+
+테이블이 생성되었습니다.
+
+SQL> DESC mvcboard;
+ 이름                                      널?      유형
+ ----------------------------------------- -------- ----------------------------
+ BID                                       NOT NULL NUMBER(4)
+ BNAME                                              VARCHAR2(20)
+ BTITLE                                             VARCHAR2(100)
+ BCONTENT                                           VARCHAR2(300)
+ BDATE                                              DATE
+ BHIT                                               NUMBER(4)
+ BGROUP                                             NUMBER(4)
+ BSTEP                                              NUMBER(4)
+ BINDENT                                            NUMBER(4)
+
+SQL> SELECT * FROM mvcboard;
+
+선택된 레코드가 없습니다.
+
+SQL> CREATE SEQUENCE mvcboard_seq;
+
+시퀀스가 생성되었습니다.
+
+SQL> INSERT INTO mvcboard(bid, bName, bTitle, bContent, bDate, bHit, bGroup, bStep, bIndent)
+  2  VALUES(mvcboard_seq.nextval, 'codedragon', 'is title', 'is content', SYSDATE, 0, mvcboard_seq.currval, 0, 0);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM mvcboard;
+
+       BID BNAME                                                                
+---------- --------------------                                                 
+BTITLE                                                                          
+--------------------------------------------------------------------------------
+BCONTENT                                                                        
+--------------------------------------------------------------------------------
+BDATE          BHIT     BGROUP      BSTEP    BINDENT                            
+-------- ---------- ---------- ---------- ----------                            
+         2 codedragon                                                           
+is title                                                                        
+is content                                                                      
+20/01/09          0          2          0          0                            
+                                                                                
+
+SQL> COMMIT;
+
+커밋이 완료되었습니다.
+
+SQL> SPOOL OFF

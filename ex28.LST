@@ -1,0 +1,236 @@
+SQL> CREATE TABLE emp21(
+  2  empno NUMBER(4),
+  3  ename VARCHAR2(10),
+  4  job VARCHAR2(9),
+  5  gender VARCHAR2(1),
+  6  deptno NUMBER(4)
+  7  );
+
+테이블이 생성되었습니다.
+
+SQL> DESC emp21;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ GENDER                                                         VARCHAR2(1)
+ DEPTNO                                                         NUMBER(4)
+
+SQL> SELECT * FROM emp21;
+
+선택된 레코드가 없습니다.
+
+SQL> SELECT table_name, constraint_name, constraint_type,
+  2  r_constraint_name
+  3  FROM USER_CONSTRAINTS
+  4  WHERE table_name='EMP21';
+
+선택된 레코드가 없습니다.
+
+SQL> ALTER TABLE emp21
+  2  ADD CONSTRAINT emp21_empno_PK PRIMARY KEY(empno);
+
+테이블이 변경되었습니다.
+
+SQL> ALTER TABLE emp21
+  2  ADD CONSTRAINT emp21_deptno_FK FOREIGN KEY(deptno)
+  3  REFERENCES dept(deptno);
+
+테이블이 변경되었습니다.
+
+SQL> SELECT * FROM emp21;
+
+선택된 레코드가 없습니다.
+
+SQL> SELECT table_name, constraint_name, constraint_type,
+  2  r_constraint_name
+  3  FROM USER_CONSTRAINTS
+  4  WHERE table_name='EMP21';
+
+TABLE_NAME                     CONSTRAINT_NAME                C R_CONSTRAINT_NAME                   
+------------------------------ ------------------------------ - ------------------------------      
+EMP21                          EMP21_EMPNO_PK                 P                                     
+EMP21                          EMP21_DEPTNO_FK                R PK_DEPT                             
+
+SQL> ALTER TABLE emp21
+  2  MODIFY ename CONSTRAINT emp21_ename_NN NOT NULL;
+
+테이블이 변경되었습니다.
+
+SQL> SELECT table_name, constraint_name, constraint_type,
+  2  r_constraint_name
+  3  FROM USER_CONSTRAINTS
+  4  WHERE table_name='EMP21';
+
+TABLE_NAME                     CONSTRAINT_NAME                C R_CONSTRAINT_NAME                   
+------------------------------ ------------------------------ - ------------------------------      
+EMP21                          EMP21_EMPNO_PK                 P                                     
+EMP21                          EMP21_DEPTNO_FK                R PK_DEPT                             
+EMP21                          EMP21_ENAME_NN                 C                                     
+
+SQL> ALTER TABLE emp21
+  2  DROP CONSTRAINT EMP21_EMPNO_PK;
+
+테이블이 변경되었습니다.
+
+SQL> SELECT table_name, constraint_name, constraint_type,
+  2  r_constraint_name
+  3  FROM USER_CONSTRAINTS
+  4  WHERE table_name='EMP21';
+
+TABLE_NAME                     CONSTRAINT_NAME                C R_CONSTRAINT_NAME                   
+------------------------------ ------------------------------ - ------------------------------      
+EMP21                          EMP21_DEPTNO_FK                R PK_DEPT                             
+EMP21                          EMP21_ENAME_NN                 C                                     
+
+SQL> ALTER TABLE emp21
+  2  DROP CONSTRAINT EMP21_ENAME_NN;
+
+테이블이 변경되었습니다.
+
+SQL> SELECT table_name, constraint_name, constraint_type,
+  2  r_constraint_name
+  3  FROM USER_CONSTRAINTS
+  4  WHERE table_name='EMP21';
+
+TABLE_NAME                     CONSTRAINT_NAME                C R_CONSTRAINT_NAME                   
+------------------------------ ------------------------------ - ------------------------------      
+EMP21                          EMP21_DEPTNO_FK                R PK_DEPT                             
+
+SQL> ALTER TABLE emp21
+  2  ADD CONSTRAINT emp21_gender_CK
+  3  CHECK (gender IN('M', 'F'));
+
+테이블이 변경되었습니다.
+
+SQL> SELECT table_name, constraint_name, constraint_type,
+  2  r_constraint_name
+  3  FROM USER_CONSTRAINTS
+  4  WHERE table_name='EMP21';
+
+TABLE_NAME                     CONSTRAINT_NAME                C R_CONSTRAINT_NAME                   
+------------------------------ ------------------------------ - ------------------------------      
+EMP21                          EMP21_GENDER_CK                C                                     
+EMP21                          EMP21_DEPTNO_FK                R PK_DEPT                             
+
+SQL> DESC emp21;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ GENDER                                                         VARCHAR2(1)
+ DEPTNO                                                         NUMBER(4)
+
+SQL> INSERT INTO emp21 VALUES(7500, 'ALICE' 'DESIGN', 'A', 10);
+INSERT INTO emp21 VALUES(7500, 'ALICE' 'DESIGN', 'A', 10)
+                                       *
+1행에 오류:
+ORA-00917: 누락된 콤마 
+
+
+SQL> INSERT INTO emp21 VALUES(7500, 'ALICE', 'DESIGN', 'A', 10);
+INSERT INTO emp21 VALUES(7500, 'ALICE', 'DESIGN', 'A', 10)
+*
+1행에 오류:
+ORA-02290: 체크 제약조건(SCOTT.EMP21_GENDER_CK)이 위배되었습니다 
+
+
+SQL> INSERT INTO emp21 VALUES(7500, 'ALICE', 'DESIGN', 'M', 10);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp21;
+
+     EMPNO ENAME      JOB       G     DEPTNO                                                        
+---------- ---------- --------- - ----------                                                        
+      7500 ALICE      DESIGN    M         10                                                        
+
+SQL> ALTER TABLE emp21
+  2  MODIFY job DEFAULT 'SECURITY';
+
+테이블이 변경되었습니다.
+
+SQL> SELECT table_name, constraint_name, constraint_type,
+  2  r_constraint_name
+  3  FROM USER_CONSTRAINTS
+  4  WHERE table_name='EMP21';
+
+TABLE_NAME                     CONSTRAINT_NAME                C R_CONSTRAINT_NAME                   
+------------------------------ ------------------------------ - ------------------------------      
+EMP21                          EMP21_GENDER_CK                C                                     
+EMP21                          EMP21_DEPTNO_FK                R PK_DEPT                             
+
+SQL> INSERT INTO emp21(empno, ename, gender, deptno)
+  2  VALUES(7600, 'BOB', 'M', 20);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp21;
+
+     EMPNO ENAME      JOB       G     DEPTNO                                                        
+---------- ---------- --------- - ----------                                                        
+      7500 ALICE      DESIGN    M         10                                                        
+      7600 BOB        SECURITY  M         20                                                        
+
+SQL> CREATE TABLE dept15(
+  2  deptno NUMBER(2) CONSTRAINT dept15_deptno_PK PRIMARY KEY,
+  3  dname VARCHAR2(14),
+  4  loc VARCHAR2(13)
+  5  );
+
+테이블이 생성되었습니다.
+
+SQL> DESC dept15;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ DEPTNO                                                NOT NULL NUMBER(2)
+ DNAME                                                          VARCHAR2(14)
+ LOC                                                            VARCHAR2(13)
+
+SQL> SELECT * FROM dept15;
+
+선택된 레코드가 없습니다.
+
+SQL> CREATE TABLE emp22(
+  2  empno NUMBER(4) CONSTRAINT emp22_empno_PK PRIMARY KEY,
+  3  ename VARCHAR2(10) CONSTRAINT emp22_ename_NN NOT NULL,
+  4  job VARCHAR2(9),
+  5  deptno NUMBER(4) CONSTRAINT emp22_deptno_FK REFERENCES dept15(deptno)
+  6  );
+
+테이블이 생성되었습니다.
+
+SQL> DESC emp22;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                 NOT NULL NUMBER(4)
+ ENAME                                                 NOT NULL VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ DEPTNO                                                         NUMBER(4)
+
+SQL> SELECT * FROM emp22;
+
+선택된 레코드가 없습니다.
+
+SQL> 
+SQL> SELECT table_name, constraint_type, constraint_name, r_constraint_name
+  2  FROM USER_CONSTRAINTS
+  3  WHERE table_name='DEPT15';
+
+TABLE_NAME                     C CONSTRAINT_NAME                R_CONSTRAINT_NAME                   
+------------------------------ - ------------------------------ ------------------------------      
+DEPT15                         P DEPT15_DEPTNO_PK                                                   
+
+SQL> SELECT table_name, constraint_type, constraint_name, r_constraint_name
+  2  FROM USER_CONSTRAINTS
+  3  WHERE table_name='EMP22';
+
+TABLE_NAME                     C CONSTRAINT_NAME                R_CONSTRAINT_NAME                   
+------------------------------ - ------------------------------ ------------------------------      
+EMP22                          C EMP22_ENAME_NN                                                     
+EMP22                          P EMP22_EMPNO_PK                                                     
+EMP22                          R EMP22_DEPTNO_FK                DEPT15_DEPTNO_PK                    
+
+SQL> SPOOL OFF

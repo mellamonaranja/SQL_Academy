@@ -1,0 +1,361 @@
+SQL> SET LINESIZE 100
+SQL> SET PAGESIZE 100
+SQL> SELECT * FROM emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp WHERE sal>=3000;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+
+SQL> SELECT enmae, sal FROM emp;
+SELECT enmae, sal FROM emp
+       *
+1행에 오류:
+ORA-00904: "ENMAE": 부적합한 식별자 
+
+
+SQL> SELECT ename, sal FROM emp;
+
+ENAME             SAL                                                                               
+---------- ----------                                                                               
+SMITH             800                                                                               
+ALLEN            1600                                                                               
+WARD             1250                                                                               
+JONES            2975                                                                               
+MARTIN           1250                                                                               
+BLAKE            2850                                                                               
+CLARK            2450                                                                               
+SCOTT            3000                                                                               
+KING             5000                                                                               
+TURNER           1500                                                                               
+ADAMS            1100                                                                               
+JAMES             950                                                                               
+FORD             3000                                                                               
+MILLER           1300                                                                               
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, sal, sal+100 FROM emp;
+
+ENAME             SAL    SAL+100                                                                    
+---------- ---------- ----------                                                                    
+SMITH             800        900                                                                    
+ALLEN            1600       1700                                                                    
+WARD             1250       1350                                                                    
+JONES            2975       3075                                                                    
+MARTIN           1250       1350                                                                    
+BLAKE            2850       2950                                                                    
+CLARK            2450       2550                                                                    
+SCOTT            3000       3100                                                                    
+KING             5000       5100                                                                    
+TURNER           1500       1600                                                                    
+ADAMS            1100       1200                                                                    
+JAMES             950       1050                                                                    
+FORD             3000       3100                                                                    
+MILLER           1300       1400                                                                    
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, sal, sal+100, (sal+100)/2 FROM emp;
+
+ENAME             SAL    SAL+100 (SAL+100)/2                                                        
+---------- ---------- ---------- -----------                                                        
+SMITH             800        900         450                                                        
+ALLEN            1600       1700         850                                                        
+WARD             1250       1350         675                                                        
+JONES            2975       3075      1537.5                                                        
+MARTIN           1250       1350         675                                                        
+BLAKE            2850       2950        1475                                                        
+CLARK            2450       2550        1275                                                        
+SCOTT            3000       3100        1550                                                        
+KING             5000       5100        2550                                                        
+TURNER           1500       1600         800                                                        
+ADAMS            1100       1200         600                                                        
+JAMES             950       1050         525                                                        
+FORD             3000       3100        1550                                                        
+MILLER           1300       1400         700                                                        
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT empno, ename, sal FROM emp;
+
+     EMPNO ENAME             SAL                                                                    
+---------- ---------- ----------                                                                    
+      7369 SMITH             800                                                                    
+      7499 ALLEN            1600                                                                    
+      7521 WARD             1250                                                                    
+      7566 JONES            2975                                                                    
+      7654 MARTIN           1250                                                                    
+      7698 BLAKE            2850                                                                    
+      7782 CLARK            2450                                                                    
+      7788 SCOTT            3000                                                                    
+      7839 KING             5000                                                                    
+      7844 TURNER           1500                                                                    
+      7876 ADAMS            1100                                                                    
+      7900 JAMES             950                                                                    
+      7902 FORD             3000                                                                    
+      7934 MILLER           1300                                                                    
+
+14 개의 행이 선택되었습니다.
+
+SQL> 
+SQL> SELECT ename, sal, sal+100 FROM emp
+  2  WHERE sal>3000
+  3  ;
+
+ENAME             SAL    SAL+100                                                                    
+---------- ---------- ----------                                                                    
+KING             5000       5100                                                                    
+
+SQL> SELECT ename, sal, sal+100 FROM emp
+  2  WHERE sal<3000;
+
+ENAME             SAL    SAL+100                                                                    
+---------- ---------- ----------                                                                    
+SMITH             800        900                                                                    
+ALLEN            1600       1700                                                                    
+WARD             1250       1350                                                                    
+JONES            2975       3075                                                                    
+MARTIN           1250       1350                                                                    
+BLAKE            2850       2950                                                                    
+CLARK            2450       2550                                                                    
+TURNER           1500       1600                                                                    
+ADAMS            1100       1200                                                                    
+JAMES             950       1050                                                                    
+MILLER           1300       1400                                                                    
+
+11 개의 행이 선택되었습니다.
+
+SQL> SELECT empno, ename, sal FROM emp
+  2  WHERE sal>=3000;
+
+     EMPNO ENAME             SAL                                                                    
+---------- ---------- ----------                                                                    
+      7788 SCOTT            3000                                                                    
+      7839 KING             5000                                                                    
+      7902 FORD             3000                                                                    
+
+SQL> SELECT empno, ename, sal FROM emp
+  2  WHERE sal<=3000;
+
+     EMPNO ENAME             SAL                                                                    
+---------- ---------- ----------                                                                    
+      7369 SMITH             800                                                                    
+      7499 ALLEN            1600                                                                    
+      7521 WARD             1250                                                                    
+      7566 JONES            2975                                                                    
+      7654 MARTIN           1250                                                                    
+      7698 BLAKE            2850                                                                    
+      7782 CLARK            2450                                                                    
+      7788 SCOTT            3000                                                                    
+      7844 TURNER           1500                                                                    
+      7876 ADAMS            1100                                                                    
+      7900 JAMES             950                                                                    
+      7902 FORD             3000                                                                    
+      7934 MILLER           1300                                                                    
+
+13 개의 행이 선택되었습니다.
+
+SQL> SELECT empno, ename, sal FROM emp
+  2  WHERE sal=3000;
+
+     EMPNO ENAME             SAL                                                                    
+---------- ---------- ----------                                                                    
+      7788 SCOTT            3000                                                                    
+      7902 FORD             3000                                                                    
+
+SQL> SELECT empno, ename, sal FROM emp
+  2  WHERE sal<>3000;
+
+     EMPNO ENAME             SAL                                                                    
+---------- ---------- ----------                                                                    
+      7369 SMITH             800                                                                    
+      7499 ALLEN            1600                                                                    
+      7521 WARD             1250                                                                    
+      7566 JONES            2975                                                                    
+      7654 MARTIN           1250                                                                    
+      7698 BLAKE            2850                                                                    
+      7782 CLARK            2450                                                                    
+      7839 KING             5000                                                                    
+      7844 TURNER           1500                                                                    
+      7876 ADAMS            1100                                                                    
+      7900 JAMES             950                                                                    
+      7934 MILLER           1300                                                                    
+
+12 개의 행이 선택되었습니다.
+
+SQL> SELECT empno, ename, sal FROM emp
+  2  WHERE sal!=3000;
+
+     EMPNO ENAME             SAL                                                                    
+---------- ---------- ----------                                                                    
+      7369 SMITH             800                                                                    
+      7499 ALLEN            1600                                                                    
+      7521 WARD             1250                                                                    
+      7566 JONES            2975                                                                    
+      7654 MARTIN           1250                                                                    
+      7698 BLAKE            2850                                                                    
+      7782 CLARK            2450                                                                    
+      7839 KING             5000                                                                    
+      7844 TURNER           1500                                                                    
+      7876 ADAMS            1100                                                                    
+      7900 JAMES             950                                                                    
+      7934 MILLER           1300                                                                    
+
+12 개의 행이 선택되었습니다.
+
+SQL> SELECT empno, ename, sal FROM emp
+  2  WHERE sal^=3000;
+
+     EMPNO ENAME             SAL                                                                    
+---------- ---------- ----------                                                                    
+      7369 SMITH             800                                                                    
+      7499 ALLEN            1600                                                                    
+      7521 WARD             1250                                                                    
+      7566 JONES            2975                                                                    
+      7654 MARTIN           1250                                                                    
+      7698 BLAKE            2850                                                                    
+      7782 CLARK            2450                                                                    
+      7839 KING             5000                                                                    
+      7844 TURNER           1500                                                                    
+      7876 ADAMS            1100                                                                    
+      7900 JAMES             950                                                                    
+      7934 MILLER           1300                                                                    
+
+12 개의 행이 선택되었습니다.
+
+SQL> SELECT empno, ename, sal FROM emp
+  2  WHERE ename=JAMES;
+WHERE ename=JAMES
+            *
+2행에 오류:
+ORA-00904: "JAMES": 부적합한 식별자 
+
+
+SQL> SELECT empno, ename, sal FROM emp
+  2  WHERE ename=FORD;
+WHERE ename=FORD
+            *
+2행에 오류:
+ORA-00904: "FORD": 부적합한 식별자 
+
+
+SQL> SELECT empno, ename, sal FROM emp
+  2  WHERE ename='JAMES';
+
+     EMPNO ENAME             SAL                                                                    
+---------- ---------- ----------                                                                    
+      7900 JAMES             950                                                                    
+
+SQL> SELECT empno, ename, sal FROM emp
+  2  WHERE ename="FORD";
+WHERE ename="FORD"
+            *
+2행에 오류:
+ORA-00904: "FORD": 부적합한 식별자 
+
+
+SQL> SELECT * FROM emp WHERE deptno=20;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+
+SQL> SELECT * FROM emp WHERE deptno=20;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+
+SQL> SELECT empno, ename, sal FROM emp
+  2  WHERE ename='JAMES';
+
+     EMPNO ENAME             SAL                                                                    
+---------- ---------- ----------                                                                    
+      7900 JAMES             950                                                                    
+
+SQL> SELECT empno, ename, sal FROM emp
+  2  WHERE hiredate>='1982/01/01';
+
+     EMPNO ENAME             SAL                                                                    
+---------- ---------- ----------                                                                    
+      7788 SCOTT            3000                                                                    
+      7876 ADAMS            1100                                                                    
+      7934 MILLER           1300                                                                    
+
+SQL> SELECT empno, ename, sal, hiredate FROM emp
+  2  WHERE hiredate>='1982/01/01';
+
+     EMPNO ENAME             SAL HIREDATE                                                           
+---------- ---------- ---------- --------                                                           
+      7788 SCOTT            3000 87/04/19                                                           
+      7876 ADAMS            1100 87/05/23                                                           
+      7934 MILLER           1300 82/01/23                                                           
+
+SQL> SELECT ename, empno, deptno, job
+  2  FROM emp
+  3  WHERE job='MANAGER' AND deptno=10;
+
+ENAME           EMPNO     DEPTNO JOB                                                                
+---------- ---------- ---------- ---------                                                          
+CLARK            7782         10 MANAGER                                                            
+
+SQL> SELECT ename, empno, deptno, job
+  2  FROM emp
+  3  WHERE job='MANAGER';
+
+ENAME           EMPNO     DEPTNO JOB                                                                
+---------- ---------- ---------- ---------                                                          
+JONES            7566         20 MANAGER                                                            
+BLAKE            7698         30 MANAGER                                                            
+CLARK            7782         10 MANAGER                                                            
+
+SQL> SELECT ename, empno, deptno, job
+  2  FROM emp
+  3  WHERE deptno=10;
+
+ENAME           EMPNO     DEPTNO JOB                                                                
+---------- ---------- ---------- ---------                                                          
+CLARK            7782         10 MANAGER                                                            
+KING             7839         10 PRESIDENT                                                          
+MILLER           7934         10 CLERK                                                              
+
+SQL> SELECT ename, empno, deptno, job
+  2  FROM emp
+  3  WHERE job='MANAGER' AND deptno='10';
+
+ENAME           EMPNO     DEPTNO JOB                                                                
+---------- ---------- ---------- ---------                                                          
+CLARK            7782         10 MANAGER                                                            
+
+SQL> SPOOL OFF

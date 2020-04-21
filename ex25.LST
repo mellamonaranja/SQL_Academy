@@ -1,0 +1,258 @@
+SQL> SELECT * FROM dept;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> INSERT INTO dept VALUES(10, 'MARKETING', 'SEOUL');
+INSERT INTO dept VALUES(10, 'MARKETING', 'SEOUL')
+*
+1행에 오류:
+ORA-00001: 무결성 제약 조건(SCOTT.PK_DEPT)에 위배됩니다 
+
+
+SQL> INSERT INTO dept VALUES(NULL, 'MARKETING', 'SEOUL');
+INSERT INTO dept VALUES(NULL, 'MARKETING', 'SEOUL')
+                        *
+1행에 오류:
+ORA-01400: NULL을 ("SCOTT"."DEPT"."DEPTNO") 안에 삽입할 수 없습니다 
+
+
+SQL> CREATE TABLE emp12
+  2  AS
+  3  SELECT * FROM emp WHERE 1=0;
+
+테이블이 생성되었습니다.
+
+SQL> DESC emp12;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ MGR                                                            NUMBER(4)
+ HIREDATE                                                       DATE
+ SAL                                                            NUMBER(7,2)
+ COMM                                                           NUMBER(7,2)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> SELECT * FROM emp12;
+
+선택된 레코드가 없습니다.
+
+SQL> INSERT INTO emp12(empno, ename, job, deptno)
+  2  
+SQL> 
+SQL> SELECT * FROM emp12;
+
+선택된 레코드가 없습니다.
+
+SQL> INSERT INTO emp12(empno, ename, job, deptno)
+  2  VALUES(NULL, NULL, 'SALESMAN', 30);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp12;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+                      SALESMAN                                                    30                
+
+SQL> CREATE TABLE emp13(
+  2  empno	NUMBER(4),
+  3  ename	VARCHAR2(10),
+  4  job	VARCHAR2(9),
+  5  deptno	NUMBER(2)
+  6  );
+
+테이블이 생성되었습니다.
+
+SQL> DESC emp13;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> SELECT * FROM emp13;
+
+선택된 레코드가 없습니다.
+
+SQL> INSERT INTO emp13 VALUES(NULL, NULL, 'SALESMAN', 30);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp13;
+
+     EMPNO ENAME      JOB           DEPTNO                                                          
+---------- ---------- --------- ----------                                                          
+                      SALESMAN          30                                                          
+
+SQL> 
+SQL> DESC emp13;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> CREATE TABLE emp14(
+  2  empno	NUMBER(4) NOT NULL,
+  3  ename	VARCHAR2(10) NOT NULL,
+  4  job VARCHAR2(9),
+  5  deptno NUMBER(2)
+  6  );
+
+테이블이 생성되었습니다.
+
+SQL> DESC emp14;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                 NOT NULL NUMBER(4)
+ ENAME                                                 NOT NULL VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> INSERT INTO emp14 VALUES(NULL, NULL, 'SALESMAN', 20);
+INSERT INTO emp14 VALUES(NULL, NULL, 'SALESMAN', 20)
+                         *
+1행에 오류:
+ORA-01400: NULL을 ("SCOTT"."EMP14"."EMPNO") 안에 삽입할 수 없습니다 
+
+
+SQL> INSERT INTO emp14 VALUES(7355, 'ALICE', 'SALESMAN', 20);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp14;
+
+     EMPNO ENAME      JOB           DEPTNO                                                          
+---------- ---------- --------- ----------                                                          
+      7355 ALICE      SALESMAN          20                                                          
+
+SQL> INSERT INTO emp14 VALUES(8355, 'BOB', NULL, NULL);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp14;
+
+     EMPNO ENAME      JOB           DEPTNO                                                          
+---------- ---------- --------- ----------                                                          
+      7355 ALICE      SALESMAN          20                                                          
+      8355 BOB                                                                                      
+
+SQL> CREATE TABLE emp15(
+  2  empno	NUMBER(4) UNIQUE,
+  3  ename	VARCHAR2(10) NOT NULL,
+  4  job	VARCHAR2(9),
+  5  deptno	NUMBER(2)
+  6  );
+
+테이블이 생성되었습니다.
+
+SQL> DESC emp15;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                 NOT NULL VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> DESC emp15;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                 NOT NULL VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> DESC emp15;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                 NOT NULL VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> 
+SQL> SELECT * FROM emp15;
+
+선택된 레코드가 없습니다.
+
+SQL> INSERT INTO emp15 VALUES(7499, 'ALICE', 'SALESMAN', 30);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp15;
+
+     EMPNO ENAME      JOB           DEPTNO                                                          
+---------- ---------- --------- ----------                                                          
+      7499 ALICE      SALESMAN          30                                                          
+
+SQL> INSERT INTO emp15 VALUES(7499, 'JACK
+  2  ', 'AGENT', 20);
+INSERT INTO emp15 VALUES(7499, 'JACK
+*
+1행에 오류:
+ORA-00001: 무결성 제약 조건(SCOTT.SYS_C0011191)에 위배됩니다 
+
+
+SQL> INSERT INTO emp15 VALUES(7499, 'JACK', 'AGENT', 20);
+INSERT INTO emp15 VALUES(7499, 'JACK', 'AGENT', 20)
+*
+1행에 오류:
+ORA-00001: 무결성 제약 조건(SCOTT.SYS_C0011191)에 위배됩니다 
+
+
+SQL> INSERT INTO emp15 VALUES(NULL, 'JAMES',
+  2  'AGENT1', 10);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> INSERT INTO emp15 VALUES(NULL, 'BOURNE', 'AGENT2', 30);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> INSERT INTO emp15 VALUES(NULL, 'ETHAN', 'AGENT3', 20);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp15;
+
+     EMPNO ENAME      JOB           DEPTNO                                                          
+---------- ---------- --------- ----------                                                          
+      7499 ALICE      SALESMAN          30                                                          
+           JAMES      AGENT1            10                                                          
+           BOURNE     AGENT2            30                                                          
+           ETHAN      AGENT3            20                                                          
+
+SQL> DESC USER_CONSTRAINTS;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ OWNER                                                          VARCHAR2(30)
+ CONSTRAINT_NAME                                       NOT NULL VARCHAR2(30)
+ CONSTRAINT_TYPE                                                VARCHAR2(1)
+ TABLE_NAME                                            NOT NULL VARCHAR2(30)
+ SEARCH_CONDITION                                               LONG
+ R_OWNER                                                        VARCHAR2(30)
+ R_CONSTRAINT_NAME                                              VARCHAR2(30)
+ DELETE_RULE                                                    VARCHAR2(9)
+ STATUS                                                         VARCHAR2(8)
+ DEFERRABLE                                                     VARCHAR2(14)
+ DEFERRED                                                       VARCHAR2(9)
+ VALIDATED                                                      VARCHAR2(13)
+ GENERATED                                                      VARCHAR2(14)
+ BAD                                                            VARCHAR2(3)
+ RELY                                                           VARCHAR2(4)
+ LAST_CHANGE                                                    DATE
+ INDEX_OWNER                                                    VARCHAR2(30)
+ INDEX_NAME                                                     VARCHAR2(30)
+ INVALID                                                        VARCHAR2(7)
+ VIEW_RELATED                                                   VARCHAR2(14)
+
+SQL> SPOOL OFF

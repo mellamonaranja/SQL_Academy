@@ -1,0 +1,173 @@
+SQL> SELECT MIN(sal) FROM emp
+  2  GROUP BY deptno WHERE deptno=30;
+GROUP BY deptno WHERE deptno=30
+                *
+2행에 오류:
+ORA-00933: SQL 명령어가 올바르게 종료되지 않았습니다 
+
+
+SQL> SELECT MIN(sal) FROM emp
+  2  GROUP BY deptno
+  3  HAVING deptno=30;
+
+  MIN(SAL)                                                                                          
+----------                                                                                          
+       950                                                                                          
+
+SQL> SELECT ename, sal FROM emp WHERE sal>950;
+
+ENAME             SAL                                                                               
+---------- ----------                                                                               
+ALLEN            1600                                                                               
+WARD             1250                                                                               
+JONES            2975                                                                               
+MARTIN           1250                                                                               
+BLAKE            2850                                                                               
+CLARK            2450                                                                               
+SCOTT            3000                                                                               
+KING             5000                                                                               
+TURNER           1500                                                                               
+ADAMS            1100                                                                               
+FORD             3000                                                                               
+MILLER           1300                                                                               
+
+12 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, sal FROM emp WHERE sal>(SELECT MIN(sal) FROM emp
+  2  GROUP BY deptno
+  3  HAVING deptno=30);
+
+ENAME             SAL                                                                               
+---------- ----------                                                                               
+ALLEN            1600                                                                               
+WARD             1250                                                                               
+JONES            2975                                                                               
+MARTIN           1250                                                                               
+BLAKE            2850                                                                               
+CLARK            2450                                                                               
+SCOTT            3000                                                                               
+KING             5000                                                                               
+TURNER           1500                                                                               
+ADAMS            1100                                                                               
+FORD             3000                                                                               
+MILLER           1300                                                                               
+
+12 개의 행이 선택되었습니다.
+
+SQL> SELECT sal FROM emp WHERE deptno=30;
+
+       SAL                                                                                          
+----------                                                                                          
+      1600                                                                                          
+      1250                                                                                          
+      1250                                                                                          
+      2850                                                                                          
+      1500                                                                                          
+       950                                                                                          
+
+6 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, sal FROM emp WHERE sal>ANY(SELECT sal FROM emp WHERE deptno=30);
+
+ENAME             SAL                                                                               
+---------- ----------                                                                               
+KING             5000                                                                               
+FORD             3000                                                                               
+SCOTT            3000                                                                               
+JONES            2975                                                                               
+BLAKE            2850                                                                               
+CLARK            2450                                                                               
+ALLEN            1600                                                                               
+TURNER           1500                                                                               
+MILLER           1300                                                                               
+WARD             1250                                                                               
+MARTIN           1250                                                                               
+ADAMS            1100                                                                               
+
+12 개의 행이 선택되었습니다.
+
+SQL> SELECT 1 FROM emp;
+
+         1                                                                                          
+----------                                                                                          
+         1                                                                                          
+         1                                                                                          
+         1                                                                                          
+         1                                                                                          
+         1                                                                                          
+         1                                                                                          
+         1                                                                                          
+         1                                                                                          
+         1                                                                                          
+         1                                                                                          
+         1                                                                                          
+         1                                                                                          
+         1                                                                                          
+         1                                                                                          
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT 1 FROM emp WHERE ename='SCOTT';
+
+         1                                                                                          
+----------                                                                                          
+         1                                                                                          
+
+SQL> SELECT 1 FROM emp WHERE ename='CODEDRAGON';
+
+선택된 레코드가 없습니다.
+
+SQL> SELECT ename, deptno, sal FROM emp e
+  2  WHERE EXISTS(SELECT 1 FROM dept d WHERE d.deptno IN(10, 20)
+  3  AND e.deptno=d.deptno);
+
+ENAME          DEPTNO        SAL                                                                    
+---------- ---------- ----------                                                                    
+SMITH              20        800                                                                    
+JONES              20       2975                                                                    
+CLARK              10       2450                                                                    
+SCOTT              20       3000                                                                    
+KING               10       5000                                                                    
+ADAMS              20       1100                                                                    
+FORD               20       3000                                                                    
+MILLER             10       1300                                                                    
+
+8 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp WHERE deptno=40;
+
+선택된 레코드가 없습니다.
+
+SQL> SELECT ename, deptno, sal FROM emp e
+  2  WHERE EXISTS(SELECT 1 FROM dept d WHERE d.deptno=40
+  3  AND e.deptno=d.deptno);
+
+선택된 레코드가 없습니다.
+
+SQL> SELECT ename, deptno, sal FROM emp e
+  2  WHERE NOT EXISTS(SELECT 1 FROM dept d WHERE d.deptno=40
+  3  AND e.deptno=d.deptno);
+
+ENAME          DEPTNO        SAL                                                                    
+---------- ---------- ----------                                                                    
+SMITH              20        800                                                                    
+ALLEN              30       1600                                                                    
+WARD               30       1250                                                                    
+JONES              20       2975                                                                    
+MARTIN             30       1250                                                                    
+BLAKE              30       2850                                                                    
+CLARK              10       2450                                                                    
+SCOTT              20       3000                                                                    
+KING               10       5000                                                                    
+TURNER             30       1500                                                                    
+ADAMS              20       1100                                                                    
+JAMES              30        950                                                                    
+FORD               20       3000                                                                    
+MILLER             10       1300                                                                    
+
+14 개의 행이 선택되었습니다.
+
+SQL> 
+SQL> 
+SQL> 
+SQL> SPOOL OFF

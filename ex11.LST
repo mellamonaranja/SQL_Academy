@@ -1,0 +1,378 @@
+SQL> SELECT LTRIM('       ORACLE        ') FROM dual;
+
+LTRIM('ORACLE'                                                                                      
+--------------                                                                                      
+ORACLE                                                                                              
+
+SQL> SELECT LTRIM('       ORACLE        ')||'"' FROM dual;
+
+LTRIM('ORACLE')                                                                                     
+---------------                                                                                     
+ORACLE        "                                                                                     
+
+SQL> SELECT RTRIM('       ORACLE        ')||'"' FROM dual;
+
+RTRIM('ORACLE'                                                                                      
+--------------                                                                                      
+       ORACLE"                                                                                      
+
+SQL> SELECT TRIM('m' FROM 'mmmmmORACLEmmmmmm') FROM dual;
+
+TRIM('                                                                                              
+------                                                                                              
+ORACLE                                                                                              
+
+SQL> SELECT TRIM('       ORACLE          ') FROM dual;
+
+TRIM('                                                                                              
+------                                                                                              
+ORACLE                                                                                              
+
+SQL> SELECT TRIM('       O   RA C  L    E          ') FROM dual;
+
+TRIM('ORACLE')                                                                                      
+----------------                                                                                    
+O   RA C  L    E                                                                                    
+
+SQL> SELECT sysdate FROM dual;
+
+SYSDATE                                                                                             
+--------                                                                                            
+19/12/13                                                                                            
+
+SQL> select SYSDATE from DUAL;
+
+SYSDATE                                                                                             
+--------                                                                                            
+19/12/13                                                                                            
+
+SQL> select sysdate from dual;
+
+SYSDATE                                                                                             
+--------                                                                                            
+19/12/13                                                                                            
+
+SQL> SELECT sysdate FROM dual;
+
+SYSDATE                                                                                             
+--------                                                                                            
+19/12/13                                                                                            
+
+SQL> SELECT sysdate-1 AS "어제", sysdate AS "오늘", sysdate+1 AS "내일" FROM dual;
+
+어제     오늘     내일                                                                              
+-------- -------- --------                                                                          
+19/12/12 19/12/13 19/12/14                                                                          
+
+SQL> SELECT ename, sysdate, hiredate FROM emp;
+
+ENAME      SYSDATE  HIREDATE                                                                        
+---------- -------- --------                                                                        
+SMITH      19/12/13 80/12/17                                                                        
+ALLEN      19/12/13 81/02/20                                                                        
+WARD       19/12/13 81/02/22                                                                        
+JONES      19/12/13 81/04/02                                                                        
+MARTIN     19/12/13 81/09/28                                                                        
+BLAKE      19/12/13 81/05/01                                                                        
+CLARK      19/12/13 81/06/09                                                                        
+SCOTT      19/12/13 87/04/19                                                                        
+KING       19/12/13 81/11/17                                                                        
+TURNER     19/12/13 81/09/08                                                                        
+ADAMS      19/12/13 87/05/23                                                                        
+JAMES      19/12/13 81/12/03                                                                        
+FORD       19/12/13 81/12/03                                                                        
+MILLER     19/12/13 82/01/23                                                                        
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, sysdate, hiredate, MONTHS_BETWEEN(sysdate, hiredate) FROM emp;
+
+ENAME      SYSDATE  HIREDATE MONTHS_BETWEEN(SYSDATE,HIREDATE)                                       
+---------- -------- -------- --------------------------------                                       
+SMITH      19/12/13 80/12/17                       467.892989                                       
+ALLEN      19/12/13 81/02/20                       465.796215                                       
+WARD       19/12/13 81/02/22                       465.731698                                       
+JONES      19/12/13 81/04/02                        464.37686                                       
+MARTIN     19/12/13 81/09/28                        458.53815                                       
+BLAKE      19/12/13 81/05/01                       463.409118                                       
+CLARK      19/12/13 81/06/09                       462.151053                                       
+SCOTT      19/12/13 87/04/19                       391.828473                                       
+KING       19/12/13 81/11/17                       456.892989                                       
+TURNER     19/12/13 81/09/08                       459.183311                                       
+ADAMS      19/12/13 87/05/23                        390.69944                                       
+JAMES      19/12/13 81/12/03                       456.344602                                       
+FORD       19/12/13 81/12/03                       456.344602                                       
+MILLER     19/12/13 82/01/23                        454.69944                                       
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, sysdate, hiredate, TRUNC(MONTHS_BETWEEN(sysdate, hiredate)) AS "근무개월수" FROM emp;
+
+ENAME      SYSDATE  HIREDATE 근무개월수                                                             
+---------- -------- -------- ----------                                                             
+SMITH      19/12/13 80/12/17        467                                                             
+ALLEN      19/12/13 81/02/20        465                                                             
+WARD       19/12/13 81/02/22        465                                                             
+JONES      19/12/13 81/04/02        464                                                             
+MARTIN     19/12/13 81/09/28        458                                                             
+BLAKE      19/12/13 81/05/01        463                                                             
+CLARK      19/12/13 81/06/09        462                                                             
+SCOTT      19/12/13 87/04/19        391                                                             
+KING       19/12/13 81/11/17        456                                                             
+TURNER     19/12/13 81/09/08        459                                                             
+ADAMS      19/12/13 87/05/23        390                                                             
+JAMES      19/12/13 81/12/03        456                                                             
+FORD       19/12/13 81/12/03        456                                                             
+MILLER     19/12/13 82/01/23        454                                                             
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, sysdate, hiredate, ROUND(MONTHS_BETWEEN(sysdate, hiredate)) AS "근무개월수" FROM emp;
+
+ENAME      SYSDATE  HIREDATE 근무개월수                                                             
+---------- -------- -------- ----------                                                             
+SMITH      19/12/13 80/12/17        468                                                             
+ALLEN      19/12/13 81/02/20        466                                                             
+WARD       19/12/13 81/02/22        466                                                             
+JONES      19/12/13 81/04/02        464                                                             
+MARTIN     19/12/13 81/09/28        459                                                             
+BLAKE      19/12/13 81/05/01        463                                                             
+CLARK      19/12/13 81/06/09        462                                                             
+SCOTT      19/12/13 87/04/19        392                                                             
+KING       19/12/13 81/11/17        457                                                             
+TURNER     19/12/13 81/09/08        459                                                             
+ADAMS      19/12/13 87/05/23        391                                                             
+JAMES      19/12/13 81/12/03        456                                                             
+FORD       19/12/13 81/12/03        456                                                             
+MILLER     19/12/13 82/01/23        455                                                             
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, hiredate, ADD_MONTHS(hiredate, 4) FROM emp;
+
+ENAME      HIREDATE ADD_MONT                                                                        
+---------- -------- --------                                                                        
+SMITH      80/12/17 81/04/17                                                                        
+ALLEN      81/02/20 81/06/20                                                                        
+WARD       81/02/22 81/06/22                                                                        
+JONES      81/04/02 81/08/02                                                                        
+MARTIN     81/09/28 82/01/28                                                                        
+BLAKE      81/05/01 81/09/01                                                                        
+CLARK      81/06/09 81/10/09                                                                        
+SCOTT      87/04/19 87/08/19                                                                        
+KING       81/11/17 82/03/17                                                                        
+TURNER     81/09/08 82/01/08                                                                        
+ADAMS      87/05/23 87/09/23                                                                        
+JAMES      81/12/03 82/04/03                                                                        
+FORD       81/12/03 82/04/03                                                                        
+MILLER     82/01/23 82/05/23                                                                        
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT sysdate, NEXT_DAY(sysdate, '금요일') FROM dual;
+
+SYSDATE  NEXT_DAY                                                                                   
+-------- --------                                                                                   
+19/12/13 19/12/20                                                                                   
+
+SQL> SELECT sysdate, NEXT_DAY(sysdate, '수') FROM dual;
+
+SYSDATE  NEXT_DAY                                                                                   
+-------- --------                                                                                   
+19/12/13 19/12/18                                                                                   
+
+SQL> SELECT hiredate FROM emp;
+
+HIREDATE                                                                                            
+--------                                                                                            
+80/12/17                                                                                            
+81/02/20                                                                                            
+81/02/22                                                                                            
+81/04/02                                                                                            
+81/09/28                                                                                            
+81/05/01                                                                                            
+81/06/09                                                                                            
+87/04/19                                                                                            
+81/11/17                                                                                            
+81/09/08                                                                                            
+87/05/23                                                                                            
+81/12/03                                                                                            
+81/12/03                                                                                            
+82/01/23                                                                                            
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT hiredate, LAST_DAY(hiredate) FROM emp;
+
+HIREDATE LAST_DAY                                                                                   
+-------- --------                                                                                   
+80/12/17 80/12/31                                                                                   
+81/02/20 81/02/28                                                                                   
+81/02/22 81/02/28                                                                                   
+81/04/02 81/04/30                                                                                   
+81/09/28 81/09/30                                                                                   
+81/05/01 81/05/31                                                                                   
+81/06/09 81/06/30                                                                                   
+87/04/19 87/04/30                                                                                   
+81/11/17 81/11/30                                                                                   
+81/09/08 81/09/30                                                                                   
+87/05/23 87/05/31                                                                                   
+81/12/03 81/12/31                                                                                   
+81/12/03 81/12/31                                                                                   
+82/01/23 82/01/31                                                                                   
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT sysdate, LAST_DAY(sysdate) FROM dual;
+
+SYSDATE  LAST_DAY                                                                                   
+-------- --------                                                                                   
+19/12/13 19/12/31                                                                                   
+
+SQL> SELECT sysdate, TO_CHAR(sysdate, 'YYYY-MM-DD') FROM dual;
+
+SYSDATE  TO_CHAR(SY                                                                                 
+-------- ----------                                                                                 
+19/12/13 2019-12-13                                                                                 
+
+SQL> SELECT sysdate, TO_CHAR(sysdate, 'YYYY/MM/DD DAY') FROM dual;
+
+SYSDATE  TO_CHAR(SYSDATE,'YYY                                                                       
+-------- --------------------                                                                       
+19/12/13 2019/12/13 금요일                                                                          
+
+SQL> SELECT sysdate, TO_CHAR(sysdate, 'YYYY/MM/DD DAY') FROM dual;
+
+SYSDATE  TO_CHAR(SYSDATE,'YYY                                                                       
+-------- --------------------                                                                       
+19/12/13 2019/12/13 금요일                                                                          
+
+SQL> clear screen
+
+SQL> SELECT sysdate, TO_CHAR(sysdate, 'YYYY/MM/DD DAY') FROM dual;
+
+SYSDATE  TO_CHAR(SYSDATE,'YYY                                                                       
+-------- --------------------                                                                       
+19/12/13 2019/12/13 금요일                                                                          
+
+SQL> SELECT hiredate, TO_CHAR(hiredate, 'YYYY/MM/DD DAY') FROM emp;
+
+HIREDATE TO_CHAR(HIREDATE,'YY                                                                       
+-------- --------------------                                                                       
+80/12/17 1980/12/17 수요일                                                                          
+81/02/20 1981/02/20 금요일                                                                          
+81/02/22 1981/02/22 일요일                                                                          
+81/04/02 1981/04/02 목요일                                                                          
+81/09/28 1981/09/28 월요일                                                                          
+81/05/01 1981/05/01 금요일                                                                          
+81/06/09 1981/06/09 화요일                                                                          
+87/04/19 1987/04/19 일요일                                                                          
+81/11/17 1981/11/17 화요일                                                                          
+81/09/08 1981/09/08 화요일                                                                          
+87/05/23 1987/05/23 토요일                                                                          
+81/12/03 1981/12/03 목요일                                                                          
+81/12/03 1981/12/03 목요일                                                                          
+82/01/23 1982/01/23 토요일                                                                          
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT hiredate, TO_CHAR(hiredate, 'YY/MON/DD DY') FROM emp;
+
+HIREDATE TO_CHAR(HIREDATE,'Y                                                                        
+-------- -------------------                                                                        
+80/12/17 80/12월/17 수                                                                              
+81/02/20 81/2월 /20 금                                                                              
+81/02/22 81/2월 /22 일                                                                              
+81/04/02 81/4월 /02 목                                                                              
+81/09/28 81/9월 /28 월                                                                              
+81/05/01 81/5월 /01 금                                                                              
+81/06/09 81/6월 /09 화                                                                              
+87/04/19 87/4월 /19 일                                                                              
+81/11/17 81/11월/17 화                                                                              
+81/09/08 81/9월 /08 화                                                                              
+87/05/23 87/5월 /23 토                                                                              
+81/12/03 81/12월/03 목                                                                              
+81/12/03 81/12월/03 목                                                                              
+82/01/23 82/1월 /23 토                                                                              
+
+14 개의 행이 선택되었습니다.
+
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT TO_CHAR(sysdate, 'YYYY/MM/DD, HH24:MI:SS') FROM dual;
+
+TO_CHAR(SYSDATE,'YYY                                                                                
+--------------------                                                                                
+2019/12/13, 16:44:02                                                                                
+
+SQL> SELECT TO_CHAR(sysdate, 'YYYY/MM/DD, HH24:MI:SS') FROM dual;
+
+TO_CHAR(SYSDATE,'YYY                                                                                
+--------------------                                                                                
+2019/12/13, 16:44:06                                                                                
+
+SQL> SELECT TO_CHAR(123000000) FROM dual;
+
+TO_CHAR(1                                                                                           
+---------                                                                                           
+123000000                                                                                           
+
+SQL> SELECT ename, sal FROM emp;
+
+ENAME             SAL                                                                               
+---------- ----------                                                                               
+SMITH             800                                                                               
+ALLEN            1600                                                                               
+WARD             1250                                                                               
+JONES            2975                                                                               
+MARTIN           1250                                                                               
+BLAKE            2850                                                                               
+CLARK            2450                                                                               
+SCOTT            3000                                                                               
+KING             5000                                                                               
+TURNER           1500                                                                               
+ADAMS            1100                                                                               
+JAMES             950                                                                               
+FORD             3000                                                                               
+MILLER           1300                                                                               
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, sal, TO_CHAR(sal, 'L999,999' FROM emp;
+SELECT ename, sal, TO_CHAR(sal, 'L999,999' FROM emp
+                                           *
+1행에 오류:
+ORA-00907: 누락된 우괄호 
+
+
+SQL> SELECT ename, sal, TO_CHAR(sal, 'L999,999') FROM emp;
+
+ENAME             SAL TO_CHAR(SAL,'L999,                                                            
+---------- ---------- ------------------                                                            
+SMITH             800              ￦800                                                            
+ALLEN            1600            ￦1,600                                                            
+WARD             1250            ￦1,250                                                            
+JONES            2975            ￦2,975                                                            
+MARTIN           1250            ￦1,250                                                            
+BLAKE            2850            ￦2,850                                                            
+CLARK            2450            ￦2,450                                                            
+SCOTT            3000            ￦3,000                                                            
+KING             5000            ￦5,000                                                            
+TURNER           1500            ￦1,500                                                            
+ADAMS            1100            ￦1,100                                                            
+JAMES             950              ￦950                                                            
+FORD             3000            ￦3,000                                                            
+MILLER           1300            ￦1,300                                                            
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT
+  2  TO_CHAR(1234, '000000000'),
+  3  TO_CHAR(1234, '999999999') FROM dual;
+
+TO_CHAR(12 TO_CHAR(12                                                                               
+---------- ----------                                                                               
+ 000001234       1234                                                                               
+
+SQL> SPOOL OFF

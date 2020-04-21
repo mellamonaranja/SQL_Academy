@@ -1,0 +1,22 @@
+SQL> SHOW USER
+USER은 "SYSTEM"입니다
+SQL> DROP USER codelab;
+DROP USER codelab
+          *
+1행에 오류:
+ORA-01918: 사용자 'CODELAB'(이)가 존재하지 않습니다 
+
+
+SQL> CREATE USER codelab IDENTIFIED BY oracle_11g;
+
+사용자가 생성되었습니다.
+
+SQL> GRANT CONNECT, RESOURCE TO codelab;
+
+권한이 부여되었습니다.
+
+SQL> conn codelab/oracle_11g;
+연결되었습니다.
+SQL> SHOW USER
+USER은 "CODELAB"입니다
+SQL> SPOOL OFF

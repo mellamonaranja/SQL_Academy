@@ -1,0 +1,100 @@
+SQL> SELECT deptno, dname FROM dept;
+
+    DEPTNO DNAME                                                                                    
+---------- --------------                                                                           
+        10 ACCOUNTING                                                                               
+        20 RESEARCH                                                                                 
+        30 SALES                                                                                    
+        40 OPERATIONS                                                                               
+
+SQL> SELECT deptno, ename FROM emp ORDER BY deptno;
+
+    DEPTNO ENAME                                                                                    
+---------- ----------                                                                               
+        10 CLARK                                                                                    
+        10 KING                                                                                     
+        10 MILLER                                                                                   
+        20 JONES                                                                                    
+        20 FORD                                                                                     
+        20 ADAMS                                                                                    
+        20 SMITH                                                                                    
+        20 SCOTT                                                                                    
+        30 WARD                                                                                     
+        30 TURNER                                                                                   
+        30 ALLEN                                                                                    
+        30 JAMES                                                                                    
+        30 BLAKE                                                                                    
+        30 MARTIN                                                                                   
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp WHERE deptno=40;
+
+선택된 레코드가 없습니다.
+
+SQL> SELECT e.ename, e.deptno, d.deptno, d.dname
+  2  FROM emp e, dept d
+  3  WHERE e.deptno = d.deptno;
+
+ENAME          DEPTNO     DEPTNO DNAME                                                              
+---------- ---------- ---------- --------------                                                     
+CLARK              10         10 ACCOUNTING                                                         
+KING               10         10 ACCOUNTING                                                         
+MILLER             10         10 ACCOUNTING                                                         
+JONES              20         20 RESEARCH                                                           
+FORD               20         20 RESEARCH                                                           
+ADAMS              20         20 RESEARCH                                                           
+SMITH              20         20 RESEARCH                                                           
+SCOTT              20         20 RESEARCH                                                           
+WARD               30         30 SALES                                                              
+TURNER             30         30 SALES                                                              
+ALLEN              30         30 SALES                                                              
+JAMES              30         30 SALES                                                              
+BLAKE              30         30 SALES                                                              
+MARTIN             30         30 SALES                                                              
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT e.ename, e.deptno, d.deptno, d.dname
+  2  FROM emp e, dept d
+  3  WHERE e.deptno(+) = d.deptno;
+
+ENAME          DEPTNO     DEPTNO DNAME                                                              
+---------- ---------- ---------- --------------                                                     
+CLARK              10         10 ACCOUNTING                                                         
+KING               10         10 ACCOUNTING                                                         
+MILLER             10         10 ACCOUNTING                                                         
+JONES              20         20 RESEARCH                                                           
+FORD               20         20 RESEARCH                                                           
+ADAMS              20         20 RESEARCH                                                           
+SMITH              20         20 RESEARCH                                                           
+SCOTT              20         20 RESEARCH                                                           
+WARD               30         30 SALES                                                              
+TURNER             30         30 SALES                                                              
+ALLEN              30         30 SALES                                                              
+JAMES              30         30 SALES                                                              
+BLAKE              30         30 SALES                                                              
+MARTIN             30         30 SALES                                                              
+                              40 OPERATIONS                                                         
+
+15 개의 행이 선택되었습니다.
+
+SQL> SELECT deptno FROM emp WHERE ename='SCOTT';
+
+    DEPTNO                                                                                          
+----------                                                                                          
+        20                                                                                          
+
+SQL> SELECT dname FROM dept WHERE deptno=20;
+
+DNAME                                                                                               
+--------------                                                                                      
+RESEARCH                                                                                            
+
+SQL> SELECT dname FROM dept WHERE deptno=(SELECT deptno FROM emp WHERE ename='SCOTT');
+
+DNAME                                                                                               
+--------------                                                                                      
+RESEARCH                                                                                            
+
+SQL> SPOOL OFF

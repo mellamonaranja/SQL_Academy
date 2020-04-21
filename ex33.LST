@@ -1,0 +1,38 @@
+SQL> SHOW USER
+USER은 "SCOTT"입니다
+SQL> conn system/oracle_11g
+연결되었습니다.
+SQL> SHOW USER
+USER은 "SYSTEM"입니다
+SQL> CREATE USER labcoder
+  2  IDENTIFIED BY oracle_11g;
+CREATE USER labcoder
+            *
+1행에 오류:
+ORA-01920: 사용자명 'LABCODER'(이)가 다른 사용자나 롤 이름과 상충됩니다 
+
+
+SQL> DROP USER labcoder;
+DROP USER labcoder
+*
+1행에 오류:
+ORA-01922: 'LABCODER'(을)를 삭제하려면 CASCADE를 지정하여야 합니다 
+
+
+SQL> DROP USER CASCADE labcoder;
+DROP USER CASCADE labcoder
+                  *
+1행에 오류:
+ORA-00921: SQL 명령어가 불완전합니다 
+
+
+SQL> CREATE USER labtest
+  2  IDENTIFIED BY oracle_11g;
+
+사용자가 생성되었습니다.
+
+SQL> GRANT CONNECT, RESOURCE TO labtest;
+
+권한이 부여되었습니다.
+
+SQL> SPOOL OFF

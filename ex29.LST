@@ -1,0 +1,320 @@
+SQL> INSERT INTO dept15 VALUES(10, 'ACCUNTING', 'NEW YORK');
+
+1 개의 행이 만들어졌습니다.
+
+SQL> INSERT INTO dept15 VALUES(20, 'RESEARCH', 'DALLAS');
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM dept15;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCUNTING      NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+
+SQL> INSERT INTO emp22 VALUES(7500, 'ALICE', 'SALESMAN', 10);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> INSERT INTO emp22 VALUES(7421, 'MAD', 'CLERK', 20);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp22;
+
+     EMPNO ENAME      JOB           DEPTNO                                                          
+---------- ---------- --------- ----------                                                          
+      7500 ALICE      SALESMAN          10                                                          
+      7421 MAD        CLERK             20                                                          
+
+SQL> DELETE FROM dept15 WHERE deptno=10;
+DELETE FROM dept15 WHERE deptno=10
+*
+1행에 오류:
+ORA-02292: 무결성 제약조건(SCOTT.EMP22_DEPTNO_FK)이 위배되었습니다- 자식 레코드가 발견되었습니다 
+
+
+SQL> SELECT * FROM dept15;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCUNTING      NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+
+SQL> ALTER TABLE emp22 DISABLE CONSTRAINT EMP22_DEPTNO_FK;
+
+테이블이 변경되었습니다.
+
+SQL> SELECT table_name, constraint_name, constraint_type,
+  2  r_constraint_name, status
+  3  FROM USER_CONSTRAINTS
+  4  WHERE table_name='EMP22';
+
+TABLE_NAME                     CONSTRAINT_NAME                C R_CONSTRAINT_NAME                   
+------------------------------ ------------------------------ - ------------------------------      
+STATUS                                                                                              
+--------                                                                                            
+EMP22                          EMP22_ENAME_NN                 C                                     
+ENABLED                                                                                             
+                                                                                                    
+EMP22                          EMP22_EMPNO_PK                 P                                     
+ENABLED                                                                                             
+                                                                                                    
+EMP22                          EMP22_DEPTNO_FK                R DEPT15_DEPTNO_PK                    
+DISABLED                                                                                            
+                                                                                                    
+
+SQL> SET LINESIZE 150
+SQL> SELECT table_name, constraint_name, constraint_type,
+  2  r_constraint_name, status
+  3  FROM USER_CONSTRAINTS
+  4  WHERE table_name='EMP22';
+
+TABLE_NAME                     CONSTRAINT_NAME                C R_CONSTRAINT_NAME              STATUS                                                 
+------------------------------ ------------------------------ - ------------------------------ --------                                               
+EMP22                          EMP22_ENAME_NN                 C                                ENABLED                                                
+EMP22                          EMP22_EMPNO_PK                 P                                ENABLED                                                
+EMP22                          EMP22_DEPTNO_FK                R DEPT15_DEPTNO_PK               DISABLED                                               
+
+SQL> DELETE FROM dept15 WHERE deptno=10;
+
+1 행이 삭제되었습니다.
+
+SQL> SELECT * FROM dept15;
+
+    DEPTNO DNAME          LOC                                                                                                                         
+---------- -------------- -------------                                                                                                               
+        20 RESEARCH       DALLAS                                                                                                                      
+
+SQL> ALTER TABLE emp22
+  2  ENABLE CONSTRAINT EMP22_DEPTNO_FK;
+ENABLE CONSTRAINT EMP22_DEPTNO_FK
+                  *
+2행에 오류:
+ORA-02298: 제약 (SCOTT.EMP22_DEPTNO_FK)을 사용 가능하게 할 수 없음 - 부모 키가 없습니다 
+
+
+SQL> SELECT * FROM emp22;
+
+     EMPNO ENAME      JOB           DEPTNO                                                                                                            
+---------- ---------- --------- ----------                                                                                                            
+      7500 ALICE      SALESMAN          10                                                                                                            
+      7421 MAD        CLERK             20                                                                                                            
+
+SQL> INSERT INTO dept15 VALUES(10, 'ACCOUNTING', 'NEW YORK');
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM dept15;
+
+    DEPTNO DNAME          LOC                                                                                                                         
+---------- -------------- -------------                                                                                                               
+        20 RESEARCH       DALLAS                                                                                                                      
+        10 ACCOUNTING     NEW YORK                                                                                                                    
+
+SQL> ALTER TABLE emp22
+  2  ENABLE CONSTRAINT emp22_deptno_FK;
+
+테이블이 변경되었습니다.
+
+SQL> SELECT table_name, constraint_name, constraint_type,
+  2  r_constraint_name, status
+  3  FROM USER_CONSTRAINTS
+  4  WHERE table_name='EMP22';
+
+TABLE_NAME                     CONSTRAINT_NAME                C R_CONSTRAINT_NAME              STATUS                                                 
+------------------------------ ------------------------------ - ------------------------------ --------                                               
+EMP22                          EMP22_ENAME_NN                 C                                ENABLED                                                
+EMP22                          EMP22_EMPNO_PK                 P                                ENABLED                                                
+EMP22                          EMP22_DEPTNO_FK                R DEPT15_DEPTNO_PK               ENABLED                                                
+
+SQL> SELECT table_name, constraint_name, constraint_type,
+  2  r_constraint_name, status
+  3  FROM USER_CONSTRAINTS
+  4  WHERE table_name='EMP22';
+
+TABLE_NAME                     CONSTRAINT_NAME                C R_CONSTRAINT_NAME              STATUS                                                 
+------------------------------ ------------------------------ - ------------------------------ --------                                               
+EMP22                          EMP22_ENAME_NN                 C                                ENABLED                                                
+EMP22                          EMP22_EMPNO_PK                 P                                ENABLED                                                
+EMP22                          EMP22_DEPTNO_FK                R DEPT15_DEPTNO_PK               ENABLED                                                
+
+SQL> SELECT table_name, constraint_type, constraint_name,
+  2  r_constraint_name, staus
+  3  FROM USER_CONSTRAINTS
+  4  WHERE table_name='DEPT15';
+r_constraint_name, staus
+                   *
+2행에 오류:
+ORA-00904: "STAUS": 부적합한 식별자 
+
+
+SQL> SELECT table_name, constraint_type, constraint_name,
+  2  r_constraint_name, status
+  3  FROM USER_CONSTRAINTS
+  4  WHERE table_name='DEPT15';
+
+TABLE_NAME                     C CONSTRAINT_NAME                R_CONSTRAINT_NAME              STATUS                                                 
+------------------------------ - ------------------------------ ------------------------------ --------                                               
+DEPT15                         P DEPT15_DEPTNO_PK                                              ENABLED                                                
+
+SQL> SELECT table_name, constraint_type, constraint_name, r_constraint_name, status
+  2  FROM USER_CONSTRAINTS
+  3  WHERE table_name='EMP22';
+
+TABLE_NAME                     C CONSTRAINT_NAME                R_CONSTRAINT_NAME              STATUS                                                 
+------------------------------ - ------------------------------ ------------------------------ --------                                               
+EMP22                          C EMP22_ENAME_NN                                                ENABLED                                                
+EMP22                          P EMP22_EMPNO_PK                                                ENABLED                                                
+EMP22                          R EMP22_DEPTNO_FK                DEPT15_DEPTNO_PK               ENABLED                                                
+
+SQL> SELECT * FROM dept15;
+
+    DEPTNO DNAME          LOC                                                                                                                         
+---------- -------------- -------------                                                                                                               
+        20 RESEARCH       DALLAS                                                                                                                      
+        10 ACCOUNTING     NEW YORK                                                                                                                    
+
+SQL> SELECT * FROM emp22;
+
+     EMPNO ENAME      JOB           DEPTNO                                                                                                            
+---------- ---------- --------- ----------                                                                                                            
+      7500 ALICE      SALESMAN          10                                                                                                            
+      7421 MAD        CLERK             20                                                                                                            
+
+SQL> 
+SQL> ALTER TABLE dept15
+  2  DISABLE PRIMARY KEY CASCADE;
+
+테이블이 변경되었습니다.
+
+SQL> SELECT table_name, constraint_type, constraint_name,
+  2  r_constraint_name, status
+  3  FROM USER_CONSTRAINTS
+  4  WHERE table_name='DEPT15';
+
+TABLE_NAME                     C CONSTRAINT_NAME                R_CONSTRAINT_NAME              STATUS                                                 
+------------------------------ - ------------------------------ ------------------------------ --------                                               
+DEPT15                         P DEPT15_DEPTNO_PK                                              DISABLED                                               
+
+SQL> SELECT table_name, constraint_type, constraint_name, r_constraint_name, status
+  2  FROM USER_CONSTRAINTS
+  3  WHERE table_name='EMP22';
+
+TABLE_NAME                     C CONSTRAINT_NAME                R_CONSTRAINT_NAME              STATUS                                                 
+------------------------------ - ------------------------------ ------------------------------ --------                                               
+EMP22                          C EMP22_ENAME_NN                                                ENABLED                                                
+EMP22                          P EMP22_EMPNO_PK                                                ENABLED                                                
+EMP22                          R EMP22_DEPTNO_FK                DEPT15_DEPTNO_PK               DISABLED                                               
+
+SQL> SELECT table_name, constraint_type, constraint_name,
+  2  r_constraint_name, status
+  3  FROM USER_CONSTRAINTS
+  4  WHERE table_name='DEPT15';
+
+TABLE_NAME                     C CONSTRAINT_NAME                R_CONSTRAINT_NAME              STATUS                                                 
+------------------------------ - ------------------------------ ------------------------------ --------                                               
+DEPT15                         P DEPT15_DEPTNO_PK                                              DISABLED                                               
+
+SQL> SELECT table_name, constraint_type, constraint_name, r_constraint_name, status
+  2  FROM USER_CONSTRAINTS
+  3  WHERE table_name='EMP22';
+
+TABLE_NAME                     C CONSTRAINT_NAME                R_CONSTRAINT_NAME              STATUS                                                 
+------------------------------ - ------------------------------ ------------------------------ --------                                               
+EMP22                          C EMP22_ENAME_NN                                                ENABLED                                                
+EMP22                          P EMP22_EMPNO_PK                                                ENABLED                                                
+EMP22                          R EMP22_DEPTNO_FK                DEPT15_DEPTNO_PK               DISABLED                                               
+
+SQL> ALTER TABLE dept15
+  2  DROP PRIMARY KEY;
+ALTER TABLE dept15
+*
+1행에 오류:
+ORA-02273: 고유/기본 키가 외부 키에 의해 참조되었습니다 
+
+
+SQL> ALTER TABLE dept15
+  2  DROP PRIMARY KEY CASCADE;
+
+테이블이 변경되었습니다.
+
+SQL> SELECT table_name, constraint_type, constraint_name,
+  2  r_constraint_name, status
+  3  FROM USER_CONSTRAINTS
+  4  WHERE table_name='DEPT15';
+
+선택된 레코드가 없습니다.
+
+SQL> SELECT table_name, constraint_type, constraint_name, r_constraint_name, status
+  2  FROM USER_CONSTRAINTS
+  3  WHERE table_name='EMP22';
+
+TABLE_NAME                     C CONSTRAINT_NAME                R_CONSTRAINT_NAME              STATUS                                                 
+------------------------------ - ------------------------------ ------------------------------ --------                                               
+EMP22                          C EMP22_ENAME_NN                                                ENABLED                                                
+EMP22                          P EMP22_EMPNO_PK                                                ENABLED                                                
+
+SQL> CREATE TABLE dept_copy
+  2  AS
+  3  SELECT * FROM dept;
+
+테이블이 생성되었습니다.
+
+SQL> DESC dept_copy;
+ 이름                                                                                널?      유형
+ ----------------------------------------------------------------------------------- -------- --------------------------------------------------------
+ DEPTNO                                                                                       NUMBER(2)
+ DNAME                                                                                        VARCHAR2(14)
+ LOC                                                                                          VARCHAR2(13)
+
+SQL> SELECT * FROM dept_copy;
+
+    DEPTNO DNAME          LOC                                                                                                                         
+---------- -------------- -------------                                                                                                               
+        10 ACCOUNTING     NEW YORK                                                                                                                    
+        20 RESEARCH       DALLAS                                                                                                                      
+        30 SALES          CHICAGO                                                                                                                     
+        40 OPERATIONS     BOSTON                                                                                                                      
+
+SQL> CREATE TABLE emp_copy
+  2  AS
+  3  SELECT * FROM emp;
+
+테이블이 생성되었습니다.
+
+SQL> DESC emp_copy;
+ 이름                                                                                널?      유형
+ ----------------------------------------------------------------------------------- -------- --------------------------------------------------------
+ EMPNO                                                                                        NUMBER(4)
+ ENAME                                                                                        VARCHAR2(10)
+ JOB                                                                                          VARCHAR2(9)
+ MGR                                                                                          NUMBER(4)
+ HIREDATE                                                                                     DATE
+ SAL                                                                                          NUMBER(7,2)
+ COMM                                                                                         NUMBER(7,2)
+ DEPTNO                                                                                       NUMBER(2)
+
+SQL> SELECT * FROM emp_copy;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                                                  
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                                                  
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                                                                  
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                                                  
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                                                  
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                                                  
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                                                  
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                                                  
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                                                                  
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                                                                  
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                                                  
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                                                  
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                                                                  
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                                                  
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                                                  
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                                                  
+
+14 개의 행이 선택되었습니다.
+
+SQL> SPOOL OFF

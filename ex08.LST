@@ -1,0 +1,22 @@
+SQL> SELECT MOD(7, 2) FROM dual;
+
+  MOD(7,2)                                                                                          
+----------                                                                                          
+         1                                                                                          
+
+SQL> SELECT MOD(27, 2), MOD(27, 5), MOD(27, 7) FROM dual;
+
+ MOD(27,2)  MOD(27,5)  MOD(27,7)                                                                    
+---------- ---------- ----------                                                                    
+         1          2          6                                                                    
+
+SQL> SELECT 'HelloWorld to Oracle' AS "적용 전",
+  2  UPPER('HelloWorld to Oacle') AS "UPPER 적용 후"
+  3  FROM dual;
+
+적용 전              UPPER 적용 후                                                                  
+-------------------- -------------------                                                            
+HelloWorld to Oracle HELLOWORLD TO OACLE                                                            
+
+SQL> SELECT 'HelloWorld to Oracle' AS "적용 전",
+  2  

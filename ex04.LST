@@ -1,0 +1,15 @@
+SQL> SHOW USER
+USER은 "SYSTEM"입니다
+SQL> ALTER USER hr ACCOUNT UNLOCK;
+
+사용자가 변경되었습니다.
+
+SQL> ALTER USER hr identified by oracle_11g;
+
+사용자가 변경되었습니다.
+
+SQL> conn hr/oracle_11g
+연결되었습니다.
+SQL> SHOW USER
+USER은 "HR"입니다
+SQL> SPOOL OFF

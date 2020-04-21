@@ -1,0 +1,209 @@
+SQL> SELECT AVG(sal) FROM emp;
+
+  AVG(SAL)                                                                                          
+----------                                                                                          
+2073.21429                                                                                          
+
+SQL> SELECT ename, sal FROM emp
+  2  WHERE sal>2073;
+
+ENAME             SAL                                                                               
+---------- ----------                                                                               
+JONES            2975                                                                               
+BLAKE            2850                                                                               
+CLARK            2450                                                                               
+SCOTT            3000                                                                               
+KING             5000                                                                               
+FORD             3000                                                                               
+
+6 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, sal FROM emp
+  2  WHERE sal>(SELECT AVG(sal) FROM emp);
+
+ENAME             SAL                                                                               
+---------- ----------                                                                               
+JONES            2975                                                                               
+BLAKE            2850                                                                               
+CLARK            2450                                                                               
+SCOTT            3000                                                                               
+KING             5000                                                                               
+FORD             3000                                                                               
+
+6 개의 행이 선택되었습니다.
+
+SQL> SELECT sal FROM emp WHERE ename='SCOTT';
+
+       SAL                                                                                          
+----------                                                                                          
+      3000                                                                                          
+
+SQL> SELECT ename, sal FROM emp WHERE sal>=3000;
+
+ENAME             SAL                                                                               
+---------- ----------                                                                               
+SCOTT            3000                                                                               
+KING             5000                                                                               
+FORD             3000                                                                               
+
+SQL> SELECT ename, sal FROM emp WHERE sal>=(SELECT sal FROM emp WHERE ename='SCOTT');
+
+ENAME             SAL                                                                               
+---------- ----------                                                                               
+SCOTT            3000                                                                               
+KING             5000                                                                               
+FORD             3000                                                                               
+
+SQL> SELECT deptno FROM emp WHERE sal>=3000;
+
+    DEPTNO                                                                                          
+----------                                                                                          
+        20                                                                                          
+        10                                                                                          
+        20                                                                                          
+
+SQL> SELECT DISTINCT deptno FROM emp WHERE sal>=3000;
+
+    DEPTNO                                                                                          
+----------                                                                                          
+        20                                                                                          
+        10                                                                                          
+
+SQL> SELECT ename, sal, deptno FROM emp
+  2  WHERE deptno=(SELECT DISTINCT deptno FROM emp WHERE sal>=3000);
+WHERE deptno=(SELECT DISTINCT deptno FROM emp WHERE sal>=3000)
+              *
+2행에 오류:
+ORA-01427: 단일 행 하위 질의에 2개 이상의 행이 리턴되었습니다. 
+
+
+SQL> SELECT ename, sal, deptno FROM emp
+  2  WHERE deptno IN (SELECT DISTINCT deptno FROM emp WHERE sal>=3000);
+
+ENAME             SAL     DEPTNO                                                                    
+---------- ---------- ----------                                                                    
+FORD             3000         20                                                                    
+ADAMS            1100         20                                                                    
+SCOTT            3000         20                                                                    
+JONES            2975         20                                                                    
+SMITH             800         20                                                                    
+MILLER           1300         10                                                                    
+KING             5000         10                                                                    
+CLARK            2450         10                                                                    
+
+8 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, sal, emp.deptno, dname
+  2  FROM emp, dept
+  3  WHERE deptno IN (SELECT DISTINCT deptno FROM emp WHERE sal>=3000)
+  4  AND emp.detpno=dept.deptno;
+AND emp.detpno=dept.deptno
+    *
+4행에 오류:
+ORA-00904: "EMP"."DETPNO": 부적합한 식별자 
+
+
+SQL> SELECT ename, sal, emp.deptno, dname
+  2  FROM emp, dept
+  3  WHERE deptno IN (SELECT DISTINCT deptno FROM emp WHERE sal>=3000)
+  4  AND emp.deptno=dept.deptno;
+WHERE deptno IN (SELECT DISTINCT deptno FROM emp WHERE sal>=3000)
+      *
+3행에 오류:
+ORA-00918: 열의 정의가 애매합니다 
+
+
+SQL> SELECT ename, sal, emp.deptno, dname
+  2  FROM emp, dept
+  3  WHERE emp.deptno IN (SELECT DISTINCT deptno FROM emp WHERE sal>=3000)
+  4  AND emp.deptno=dept.deptno;
+
+ENAME             SAL     DEPTNO DNAME                                                              
+---------- ---------- ---------- --------------                                                     
+SCOTT            3000         20 RESEARCH                                                           
+SMITH             800         20 RESEARCH                                                           
+ADAMS            1100         20 RESEARCH                                                           
+FORD             3000         20 RESEARCH                                                           
+JONES            2975         20 RESEARCH                                                           
+MILLER           1300         10 ACCOUNTING                                                         
+KING             5000         10 ACCOUNTING                                                         
+CLARK            2450         10 ACCOUNTING                                                         
+
+8 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, sal, emp.deptno, dname
+  2  FROM emp, dept
+  3  WHERE dept.deptno IN (SELECT DISTINCT deptno FROM emp WHERE sal>=3000)
+  4  AND emp.deptno=dept.deptno;
+
+ENAME             SAL     DEPTNO DNAME                                                              
+---------- ---------- ---------- --------------                                                     
+SMITH             800         20 RESEARCH                                                           
+JONES            2975         20 RESEARCH                                                           
+CLARK            2450         10 ACCOUNTING                                                         
+SCOTT            3000         20 RESEARCH                                                           
+KING             5000         10 ACCOUNTING                                                         
+ADAMS            1100         20 RESEARCH                                                           
+FORD             3000         20 RESEARCH                                                           
+MILLER           1300         10 ACCOUNTING                                                         
+
+8 개의 행이 선택되었습니다.
+
+SQL> SELECT MAX(sal) FROM emp
+  2  GROUP BY deptno
+  3  HAVING deptno=30;
+
+  MAX(SAL)                                                                                          
+----------                                                                                          
+      2850                                                                                          
+
+SQL> SELECT ename, sal FROM emp WHERE sal>2850;
+
+ENAME             SAL                                                                               
+---------- ----------                                                                               
+JONES            2975                                                                               
+SCOTT            3000                                                                               
+KING             5000                                                                               
+FORD             3000                                                                               
+
+SQL> SELECT ename, sal FROM emp WHERE sal>(SELECT MAX(sal) FROM emp
+  2  GROUP BY deptno
+  3  HAVING deptno=30);
+
+ENAME             SAL                                                                               
+---------- ----------                                                                               
+JONES            2975                                                                               
+SCOTT            3000                                                                               
+KING             5000                                                                               
+FORD             3000                                                                               
+
+SQL> SELECT sal FROM emp WHERE deptno=30;
+
+       SAL                                                                                          
+----------                                                                                          
+      1600                                                                                          
+      1250                                                                                          
+      1250                                                                                          
+      2850                                                                                          
+      1500                                                                                          
+       950                                                                                          
+
+6 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, sal FROM emp WHERE sal>(SELECT sal FROM emp WHERE deptno=30);
+SELECT ename, sal FROM emp WHERE sal>(SELECT sal FROM emp WHERE deptno=30)
+                                      *
+1행에 오류:
+ORA-01427: 단일 행 하위 질의에 2개 이상의 행이 리턴되었습니다. 
+
+
+SQL> SELECT ename, sal FROM emp WHERE sal>ALL(SELECT sal FROM emp WHERE deptno=30);
+
+ENAME             SAL                                                                               
+---------- ----------                                                                               
+JONES            2975                                                                               
+SCOTT            3000                                                                               
+FORD             3000                                                                               
+KING             5000                                                                               
+
+SQL> SPOOL OFF

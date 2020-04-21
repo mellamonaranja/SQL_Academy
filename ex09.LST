@@ -1,0 +1,156 @@
+SQL> SELECT 'HelloWorld to Oracle' AS "적용 전",
+  2  LOWER('HelloWorld to Oracle') AS "LOWER적용 후"
+  3  FROM dual;
+
+적용 전              LOWER적용 후                                               
+-------------------- --------------------                                       
+HelloWorld to Oracle helloworld to oracle                                       
+
+SQL> 
+SQL> 
+SQL> clear screen
+
+SQL> SELECT 'HelloWorld to Oracle' AS "적용 전",
+  2  INITCAP('HelloWOrld to Oracle') AS "INITCAP적용 후"
+  3  FROM dual;
+
+적용 전              INITCAP적용 후                                             
+-------------------- --------------------                                       
+HelloWorld to Oracle Helloworld To Oracle                                       
+
+SQL> SELECT LENGTH('Oracle'), LENGTH('오라클') FROM dual;
+
+LENGTH('ORACLE') LENGTH('오라클')                                               
+---------------- ----------------                                               
+               6                3                                               
+
+SQL> SELECT LENGTHB('Oracle'), LENGTHB('오라클') FROM dual;
+
+LENGTHB('ORACLE') LENGTHB('오라클')                                             
+----------------- -----------------                                             
+                6                 6                                             
+
+SQL> SELECT SUBSTR('HelloWorld to Oracle', 6, 5) FROM dual;
+
+SUBST                                                                           
+-----                                                                           
+World                                                                           
+
+SQL> SELECT SUBSTR('HelloWorld to Oracle', -6, 6) FROM dual;
+
+SUBSTR                                                                          
+------                                                                          
+Oracle                                                                          
+
+SQL> SELECT ename, hiredate FROM emp;
+
+ENAME      HIREDATE                                                             
+---------- --------                                                             
+SMITH      80/12/17                                                             
+ALLEN      81/02/20                                                             
+WARD       81/02/22                                                             
+JONES      81/04/02                                                             
+MARTIN     81/09/28                                                             
+BLAKE      81/05/01                                                             
+CLARK      81/06/09                                                             
+SCOTT      87/04/19                                                             
+KING       81/11/17                                                             
+TURNER     81/09/08                                                             
+ADAMS      87/05/23                                                             
+
+ENAME      HIREDATE                                                             
+---------- --------                                                             
+JAMES      81/12/03                                                             
+FORD       81/12/03                                                             
+MILLER     82/01/23                                                             
+
+14 개의 행이 선택되었습니다.
+
+SQL> SET LINESIZE 100
+SQL> SET PAGESIZE 100
+SQL> SELECT ename, SUBSTR(hiredate, 1, 2),
+  2  SUBSTR(hiredate, 4,2) FROM emp;
+
+ENAME      SUBS SUBS                                                                                
+---------- ---- ----                                                                                
+SMITH      80   12                                                                                  
+ALLEN      81   02                                                                                  
+WARD       81   02                                                                                  
+JONES      81   04                                                                                  
+MARTIN     81   09                                                                                  
+BLAKE      81   05                                                                                  
+CLARK      81   06                                                                                  
+SCOTT      87   04                                                                                  
+KING       81   11                                                                                  
+TURNER     81   09                                                                                  
+ADAMS      87   05                                                                                  
+JAMES      81   12                                                                                  
+FORD       81   12                                                                                  
+MILLER     82   01                                                                                  
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, SUBSTR(hiredate, 1, 2) "년도",
+  2  SUBSTR(hiredate, 4,2) "달" FROM emp;
+
+ENAME      년도 달                                                                                  
+---------- ---- ----                                                                                
+SMITH      80   12                                                                                  
+ALLEN      81   02                                                                                  
+WARD       81   02                                                                                  
+JONES      81   04                                                                                  
+MARTIN     81   09                                                                                  
+BLAKE      81   05                                                                                  
+CLARK      81   06                                                                                  
+SCOTT      87   04                                                                                  
+KING       81   11                                                                                  
+TURNER     81   09                                                                                  
+ADAMS      87   05                                                                                  
+JAMES      81   12                                                                                  
+FORD       81   12                                                                                  
+MILLER     82   01                                                                                  
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, 19||SUBSTR(hiredate, 1, 2) "년도",
+  2  SUBSTR(hiredate, 4,2) "달" FROM emp;
+
+ENAME      년도   달                                                                                
+---------- ------ ----                                                                              
+SMITH      1980   12                                                                                
+ALLEN      1981   02                                                                                
+WARD       1981   02                                                                                
+JONES      1981   04                                                                                
+MARTIN     1981   09                                                                                
+BLAKE      1981   05                                                                                
+CLARK      1981   06                                                                                
+SCOTT      1987   04                                                                                
+KING       1981   11                                                                                
+TURNER     1981   09                                                                                
+ADAMS      1987   05                                                                                
+JAMES      1981   12                                                                                
+FORD       1981   12                                                                                
+MILLER     1982   01                                                                                
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, 19||SUBSTR(hiredate, 1, 2) "년도",
+  2  SUBSTR(hiredate, 4,2) "달" FROM emp
+  3  WHERE SUBSTR(hiredate, 4, 2)='09';
+
+ENAME      년도   달                                                                                
+---------- ------ ----                                                                              
+MARTIN     1981   09                                                                                
+TURNER     1981   09                                                                                
+
+SQL> SELECT SUBSTR('HelloWorld to Oracle', 6, 5) AS "SUBSTR",
+  2  SUBSTRB('HelloWorld to Oracle', 6, 5) AS "SUBSTRB"
+  3  FROM dual;
+
+SUBST SUBST                                                                                         
+----- -----                                                                                         
+World World                                                                                         
+
+SQL> 
+SQL> SELECT('헬로우월드 투 오라클', 3, 2) AS "SUBSTR",
+  2  

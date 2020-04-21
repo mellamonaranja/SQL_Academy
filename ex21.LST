@@ -1,0 +1,283 @@
+SQL> INSERT INTO dept02(deptno, dname, loc)
+  2  VALUES(100, 'ACCOUNTING', 'NEW YORK');
+VALUES(100, 'ACCOUNTING', 'NEW YORK')
+       *
+2행에 오류:
+ORA-01438: 이 열에 대해 지정된 전체 자릿수보다 큰 값이 허용됩니다. 
+
+
+SQL> DESC dept02;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ DEPTNO                                                         NUMBER(2)
+ DNAME                                                          VARCHAR2(14)
+ LOC                                                            VARCHAR2(13)
+
+SQL> INSERT INTO dept02(deptno, dname, loc)
+  2  VALUES(10, 'ACCOUNTING');
+VALUES(10, 'ACCOUNTING')
+*
+2행에 오류:
+ORA-00947: 값의 수가 충분하지 않습니다 
+
+
+SQL> INSERT INTO dept02
+  2  VALUES(20, 'RESEARCH', 'DALLAS');
+
+1 개의 행이 만들어졌습니다.
+
+SQL> INSERT INTO dept02
+  2  VALUES('SEOUL', 30, 'KOREA');
+VALUES('SEOUL', 30, 'KOREA')
+       *
+2행에 오류:
+ORA-01722: 수치가 부적합합니다 
+
+
+SQL> DESC dept02;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ DEPTNO                                                         NUMBER(2)
+ DNAME                                                          VARCHAR2(14)
+ LOC                                                            VARCHAR2(13)
+
+SQL> CREATE TABLE dept03
+  2  AS SELECT * FROM dept WHERE 1=0;
+
+테이블이 생성되었습니다.
+
+SQL> SELECT * FROM dept03;
+
+선택된 레코드가 없습니다.
+
+SQL> DESC dept03;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ DEPTNO                                                         NUMBER(2)
+ DNAME                                                          VARCHAR2(14)
+ LOC                                                            VARCHAR2(13)
+
+SQL> DESC dept03;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ DEPTNO                                                         NUMBER(2)
+ DNAME                                                          VARCHAR2(14)
+ LOC                                                            VARCHAR2(13)
+
+SQL> INSERT INTO dept03
+  2  SELECT * FROM dept;
+
+4 개의 행이 만들어졌습니다.
+
+SQL> DESC dept;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ DEPTNO                                                NOT NULL NUMBER(2)
+ DNAME                                                          VARCHAR2(14)
+ LOC                                                            VARCHAR2(13)
+
+SQL> SELECT * FROM dept03;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> 
+SQL> 
+SQL> CREATE TABLE emp_hir
+  2  AS SELECT empno, ename, hiredate FROM emp WHERE 1=0;
+
+테이블이 생성되었습니다.
+
+SQL> CREATE TABLE emp_mgr
+  2  AS SELECT empno, ename, mgr FROM emp WHERE 1=0;
+
+테이블이 생성되었습니다.
+
+SQL> SELECT * FROM emp_hir;
+
+선택된 레코드가 없습니다.
+
+SQL> SELECT * FROM emp_mgr;
+
+선택된 레코드가 없습니다.
+
+SQL> DESC emp_hir;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ HIREDATE                                                       DATE
+
+SQL> DESC emp_mgr;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ MGR                                                            NUMBER(4)
+
+SQL> INSERT INTO emp_hir
+  2  SELECT empno, ename, hiredate FROM emp WHERE deptno=20;
+
+5 개의 행이 만들어졌습니다.
+
+SQL> INSERT INTO emp_mgr
+  2  SELECT empno, ename, mgr FROM emp WHERE deptno=20;
+
+5 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp_hir;
+
+     EMPNO ENAME      HIREDATE                                                                      
+---------- ---------- --------                                                                      
+      7369 SMITH      80/12/17                                                                      
+      7566 JONES      81/04/02                                                                      
+      7788 SCOTT      87/04/19                                                                      
+      7876 ADAMS      87/05/23                                                                      
+      7902 FORD       81/12/03                                                                      
+
+SQL> SELECT * FROM emp_mgr;
+
+     EMPNO ENAME             MGR                                                                    
+---------- ---------- ----------                                                                    
+      7369 SMITH            7902                                                                    
+      7566 JONES            7839                                                                    
+      7788 SCOTT            7566                                                                    
+      7876 ADAMS            7788                                                                    
+      7902 FORD             7566                                                                    
+
+SQL> DELETE FROM emp_hir;
+
+5 행이 삭제되었습니다.
+
+SQL> DELETE FROM emp_mgr;
+
+5 행이 삭제되었습니다.
+
+SQL> SELECT * FROM emp_hir;
+
+선택된 레코드가 없습니다.
+
+SQL> SELECT * FROM emp_mgr;
+
+선택된 레코드가 없습니다.
+
+SQL> DESC emp_hir;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ HIREDATE                                                       DATE
+
+SQL> DESC emp_mgr;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ MGR                                                            NUMBER(4)
+
+SQL> SELECT empno, ename, hiredate, mgr FROM emp WHERE deptno=20;
+
+     EMPNO ENAME      HIREDATE        MGR                                                           
+---------- ---------- -------- ----------                                                           
+      7369 SMITH      80/12/17       7902                                                           
+      7566 JONES      81/04/02       7839                                                           
+      7788 SCOTT      87/04/19       7566                                                           
+      7876 ADAMS      87/05/23       7788                                                           
+      7902 FORD       81/12/03       7566                                                           
+
+SQL> INSERT ALL
+  2  INTO emp_hir VALUES(empno, ename, hiredate)
+  3  INTO emp_mgr VALUES(empno, ename, mgr)
+  4  SELECT empno, ename, hiredate, mgr FROM emp WHERE deptno=20;
+
+10 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp_hir
+  2  ;
+
+     EMPNO ENAME      HIREDATE                                                                      
+---------- ---------- --------                                                                      
+      7369 SMITH      80/12/17                                                                      
+      7566 JONES      81/04/02                                                                      
+      7788 SCOTT      87/04/19                                                                      
+      7876 ADAMS      87/05/23                                                                      
+      7902 FORD       81/12/03                                                                      
+
+SQL> SELECT * FROM emp_mgr;
+
+     EMPNO ENAME             MGR                                                                    
+---------- ---------- ----------                                                                    
+      7369 SMITH            7902                                                                    
+      7566 JONES            7839                                                                    
+      7788 SCOTT            7566                                                                    
+      7876 ADAMS            7788                                                                    
+      7902 FORD             7566                                                                    
+
+SQL> CREATE TABLE emp_hir01
+  2  AS SELECT empno, ename, hiredate FROM emp WHERE 1=0;
+
+테이블이 생성되었습니다.
+
+SQL> SELECT * FROM emp_hir01;
+
+선택된 레코드가 없습니다.
+
+SQL> DESC emp_hir01;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ HIREDATE                                                       DATE
+
+SQL> CREATE TABLE emp_sal
+  2  AS
+  3  SELECT empno, ename, sal FROM emp WHERE 1=0;
+
+테이블이 생성되었습니다.
+
+SQL> SELECT * FROM emp_sal;
+
+선택된 레코드가 없습니다.
+
+SQL> DESC emp_sal;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ SAL                                                            NUMBER(7,2)
+
+SQL> INSERT ALL
+  2  WHEN hiredate>'1982/01/01' THEN
+  3  	INTO emp_hir01 VALUES(empno, ename, hiredate)
+  4  WHEN sal>=2000 THEN
+  5  	INTO emp_sal VALUES(empno, ename, sal)
+  6  SELECT empno, ename, hiredate, sal FROM emp;
+
+9 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp_hir01;
+
+     EMPNO ENAME      HIREDATE                                                                      
+---------- ---------- --------                                                                      
+      7788 SCOTT      87/04/19                                                                      
+      7876 ADAMS      87/05/23                                                                      
+      7934 MILLER     82/01/23                                                                      
+
+SQL> SELECT * FROM emp_sal;
+
+     EMPNO ENAME             SAL                                                                    
+---------- ---------- ----------                                                                    
+      7566 JONES            2975                                                                    
+      7698 BLAKE            2850                                                                    
+      7782 CLARK            2450                                                                    
+      7788 SCOTT            3000                                                                    
+      7839 KING             5000                                                                    
+      7902 FORD             3000                                                                    
+
+6 개의 행이 선택되었습니다.
+
+SQL> SPOOL OFF

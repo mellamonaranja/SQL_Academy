@@ -1,0 +1,60 @@
+SQL> CREATE TABLE membership(
+  2  name VARCHAR2(20),
+  3  id VARCHAR2(20),
+  4  pw VARCHAR2(20),
+  5  phone1 VARCHAR2(20),
+  6  phone2 VARCHAR2(20),
+  7  phone3 VARCHAR2(20),
+  8  gender VARCHAR2(20),
+  9  email VARCHAR2(30)
+ 10  );
+
+테이블이 생성되었습니다.
+
+SQL> DESC membership;
+ 이름                                      널?      유형
+ ----------------------------------------- -------- ----------------------------
+ NAME                                               VARCHAR2(20)
+ ID                                                 VARCHAR2(20)
+ PW                                                 VARCHAR2(20)
+ PHONE1                                             VARCHAR2(20)
+ PHONE2                                             VARCHAR2(20)
+ PHONE3                                             VARCHAR2(20)
+ GENDER                                             VARCHAR2(20)
+ EMAIL                                              VARCHAR2(30)
+
+SQL> INSERT INTO membership VALUES('codedragon', 'code', 'passwd', '010', '1234', '4567', 'M', 'codedragon@tistory.com');
+
+1 개의 행이 만들어졌습니다.
+
+SQL> 
+SQL> COMMIT;
+
+커밋이 완료되었습니다.
+
+SQL> SELECT * FROM membership;
+
+NAME                 ID                   PW                                    
+-------------------- -------------------- --------------------                  
+PHONE1               PHONE2               PHONE3                                
+-------------------- -------------------- --------------------                  
+GENDER               EMAIL                                                      
+-------------------- ------------------------------                             
+codedragon           code                 passwd                                
+010                  1234                 4567                                  
+M                    codedragon@tistory.com                                     
+                                                                                
+
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> SHOW USER
+USER은 "CODELAB"입니다
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> SPOOL OFF

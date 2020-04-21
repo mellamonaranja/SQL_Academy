@@ -1,0 +1,907 @@
+SQL> SELECT deptno, MAX(sal), MIN(sal)
+  2  FROM emp
+  3  GROUP BY deptno
+  4  HAVING MAX(sal) >=2900;
+
+    DEPTNO   MAX(SAL)   MIN(SAL)                                                                    
+---------- ---------- ----------                                                                    
+        20       3000        800                                                                    
+        10       5000       1300                                                                    
+
+SQL> SELECT deptno, MAX(sal), MIN(sal)
+  2  FROM emp
+  3  GROUP BY deptno
+  4  HAVING MAX(sal)>=2900 AND MIN(sal)>=1000;
+
+    DEPTNO   MAX(SAL)   MIN(SAL)                                                                    
+---------- ---------- ----------                                                                    
+        10       5000       1300                                                                    
+
+SQL> SELECT MAX(sal) FROM emp;
+
+  MAX(SAL)                                                                                          
+----------                                                                                          
+      5000                                                                                          
+
+SQL> SELECT ename, MAX(sal) FROM emp;
+SELECT ename, MAX(sal) FROM emp
+       *
+1행에 오류:
+ORA-00937: 단일 그룹의 그룹 함수가 아닙니다 
+
+
+SQL> SELECT MAX(sal) FROM emp
+  2  GROUP BY deptno HAVING deptno=30;
+
+  MAX(SAL)                                                                                          
+----------                                                                                          
+      2850                                                                                          
+
+SQL> SELECT ename FROM emp
+  2  WHERE sal = (2850);
+
+ENAME                                                                                               
+----------                                                                                          
+BLAKE                                                                                               
+
+SQL> SELECT ename FROM emp
+  2  WHERE sal = (SELECT MAX(sal) FROM emp
+  3  GROUP BY deptno HAVING deptno=30);
+
+ENAME                                                                                               
+----------                                                                                          
+BLAKE                                                                                               
+
+SQL> SELECT ename, sal FROM emp
+  2  WHERE sal = (SELECT MAX(sal) FROM emp
+  3  GROUP BY deptno HAVING deptno=30);
+
+ENAME             SAL                                                                               
+---------- ----------                                                                               
+BLAKE            2850                                                                               
+
+SQL> SELECT * FROM emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM dept;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> SELECT * FROM emp, dept;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO     DEPTNO     
+---------- ---------- --------- ---------- -------- ---------- ---------- ---------- ----------     
+DNAME          LOC                                                                                  
+-------------- -------------                                                                        
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         30     
+SALES          CHICAGO                                                                              
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO     DEPTNO     
+---------- ---------- --------- ---------- -------- ---------- ---------- ---------- ----------     
+DNAME          LOC                                                                                  
+-------------- -------------                                                                        
+                                                                                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+
+56 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp, dept;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO     DEPTNO     
+---------- ---------- --------- ---------- -------- ---------- ---------- ---------- ----------     
+DNAME          LOC                                                                                  
+-------------- -------------                                                                        
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         30     
+SALES          CHICAGO                                                                              
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO     DEPTNO     
+---------- ---------- --------- ---------- -------- ---------- ---------- ---------- ----------     
+DNAME          LOC                                                                                  
+-------------- -------------                                                                        
+                                                                                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+
+56 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp, dept;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO     DEPTNO     
+---------- ---------- --------- ---------- -------- ---------- ---------- ---------- ----------     
+DNAME          LOC                                                                                  
+-------------- -------------                                                                        
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         10     
+ACCOUNTING     NEW YORK                                                                             
+                                                                                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         20     
+RESEARCH       DALLAS                                                                               
+                                                                                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         30     
+SALES          CHICAGO                                                                              
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO     DEPTNO     
+---------- ---------- --------- ---------- -------- ---------- ---------- ---------- ----------     
+DNAME          LOC                                                                                  
+-------------- -------------                                                                        
+                                                                                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         30     
+SALES          CHICAGO                                                                              
+                                                                                                    
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7839 KING       PRESIDENT            81/11/17       5000                    10         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         40     
+OPERATIONS     BOSTON                                                                               
+                                                                                                    
+
+56 개의 행이 선택되었습니다.
+
+SQL> SET LINESIZE 140
+SQL> SET PAGESIZE 140
+SQL> SELECT * FROM emp, dept;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO     DEPTNO DNAME          LOC                          
+---------- ---------- --------- ---------- -------- ---------- ---------- ---------- ---------- -------------- -------------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         10 ACCOUNTING     NEW YORK                     
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         10 ACCOUNTING     NEW YORK                     
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         10 ACCOUNTING     NEW YORK                     
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         10 ACCOUNTING     NEW YORK                     
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         10 ACCOUNTING     NEW YORK                     
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         10 ACCOUNTING     NEW YORK                     
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10         10 ACCOUNTING     NEW YORK                     
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20         10 ACCOUNTING     NEW YORK                     
+      7839 KING       PRESIDENT            81/11/17       5000                    10         10 ACCOUNTING     NEW YORK                     
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         10 ACCOUNTING     NEW YORK                     
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20         10 ACCOUNTING     NEW YORK                     
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         10 ACCOUNTING     NEW YORK                     
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         10 ACCOUNTING     NEW YORK                     
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         10 ACCOUNTING     NEW YORK                     
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         20 RESEARCH       DALLAS                       
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         20 RESEARCH       DALLAS                       
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         20 RESEARCH       DALLAS                       
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         20 RESEARCH       DALLAS                       
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         20 RESEARCH       DALLAS                       
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         20 RESEARCH       DALLAS                       
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10         20 RESEARCH       DALLAS                       
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20         20 RESEARCH       DALLAS                       
+      7839 KING       PRESIDENT            81/11/17       5000                    10         20 RESEARCH       DALLAS                       
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         20 RESEARCH       DALLAS                       
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20         20 RESEARCH       DALLAS                       
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         20 RESEARCH       DALLAS                       
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         20 RESEARCH       DALLAS                       
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         20 RESEARCH       DALLAS                       
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         30 SALES          CHICAGO                      
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         30 SALES          CHICAGO                      
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         30 SALES          CHICAGO                      
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         30 SALES          CHICAGO                      
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         30 SALES          CHICAGO                      
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         30 SALES          CHICAGO                      
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10         30 SALES          CHICAGO                      
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20         30 SALES          CHICAGO                      
+      7839 KING       PRESIDENT            81/11/17       5000                    10         30 SALES          CHICAGO                      
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         30 SALES          CHICAGO                      
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20         30 SALES          CHICAGO                      
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         30 SALES          CHICAGO                      
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         30 SALES          CHICAGO                      
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         30 SALES          CHICAGO                      
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         40 OPERATIONS     BOSTON                       
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         40 OPERATIONS     BOSTON                       
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         40 OPERATIONS     BOSTON                       
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         40 OPERATIONS     BOSTON                       
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         40 OPERATIONS     BOSTON                       
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         40 OPERATIONS     BOSTON                       
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10         40 OPERATIONS     BOSTON                       
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20         40 OPERATIONS     BOSTON                       
+      7839 KING       PRESIDENT            81/11/17       5000                    10         40 OPERATIONS     BOSTON                       
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         40 OPERATIONS     BOSTON                       
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20         40 OPERATIONS     BOSTON                       
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         40 OPERATIONS     BOSTON                       
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         40 OPERATIONS     BOSTON                       
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         40 OPERATIONS     BOSTON                       
+
+56 개의 행이 선택되었습니다.
+
+SQL> 
+SQL> 
+SQL> SELECT * FROM emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                                        
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                                        
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                                                        
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                                        
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                                        
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                                        
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                                        
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                                        
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                                                        
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                                                        
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                                        
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                                        
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                                                        
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                                        
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                                        
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                                        
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM dept;
+
+    DEPTNO DNAME          LOC                                                                                                               
+---------- -------------- -------------                                                                                                     
+        10 ACCOUNTING     NEW YORK                                                                                                          
+        20 RESEARCH       DALLAS                                                                                                            
+        30 SALES          CHICAGO                                                                                                           
+        40 OPERATIONS     BOSTON                                                                                                            
+
+SQL> SELECT * FROM emp, dept
+  2  WHERE emp.deptno = dept.deptno;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO     DEPTNO DNAME          LOC                          
+---------- ---------- --------- ---------- -------- ---------- ---------- ---------- ---------- -------------- -------------                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10         10 ACCOUNTING     NEW YORK                     
+      7839 KING       PRESIDENT            81/11/17       5000                    10         10 ACCOUNTING     NEW YORK                     
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10         10 ACCOUNTING     NEW YORK                     
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20         20 RESEARCH       DALLAS                       
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20         20 RESEARCH       DALLAS                       
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20         20 RESEARCH       DALLAS                       
+      7369 SMITH      CLERK           7902 80/12/17        800                    20         20 RESEARCH       DALLAS                       
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20         20 RESEARCH       DALLAS                       
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30         30 SALES          CHICAGO                      
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30         30 SALES          CHICAGO                      
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30         30 SALES          CHICAGO                      
+      7900 JAMES      CLERK           7698 81/12/03        950                    30         30 SALES          CHICAGO                      
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30         30 SALES          CHICAGO                      
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30         30 SALES          CHICAGO                      
+
+14 개의 행이 선택되었습니다.
+
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT * FROM dept;
+
+    DEPTNO DNAME          LOC                                                                                                               
+---------- -------------- -------------                                                                                                     
+        10 ACCOUNTING     NEW YORK                                                                                                          
+        20 RESEARCH       DALLAS                                                                                                            
+        30 SALES          CHICAGO                                                                                                           
+        40 OPERATIONS     BOSTON                                                                                                            
+
+SQL> SELECT ename, dname FROM emp, dept;
+
+ENAME      DNAME                                                                                                                            
+---------- --------------                                                                                                                   
+SMITH      ACCOUNTING                                                                                                                       
+ALLEN      ACCOUNTING                                                                                                                       
+WARD       ACCOUNTING                                                                                                                       
+JONES      ACCOUNTING                                                                                                                       
+MARTIN     ACCOUNTING                                                                                                                       
+BLAKE      ACCOUNTING                                                                                                                       
+CLARK      ACCOUNTING                                                                                                                       
+SCOTT      ACCOUNTING                                                                                                                       
+KING       ACCOUNTING                                                                                                                       
+TURNER     ACCOUNTING                                                                                                                       
+ADAMS      ACCOUNTING                                                                                                                       
+JAMES      ACCOUNTING                                                                                                                       
+FORD       ACCOUNTING                                                                                                                       
+MILLER     ACCOUNTING                                                                                                                       
+SMITH      RESEARCH                                                                                                                         
+ALLEN      RESEARCH                                                                                                                         
+WARD       RESEARCH                                                                                                                         
+JONES      RESEARCH                                                                                                                         
+MARTIN     RESEARCH                                                                                                                         
+BLAKE      RESEARCH                                                                                                                         
+CLARK      RESEARCH                                                                                                                         
+SCOTT      RESEARCH                                                                                                                         
+KING       RESEARCH                                                                                                                         
+TURNER     RESEARCH                                                                                                                         
+ADAMS      RESEARCH                                                                                                                         
+JAMES      RESEARCH                                                                                                                         
+FORD       RESEARCH                                                                                                                         
+MILLER     RESEARCH                                                                                                                         
+SMITH      SALES                                                                                                                            
+ALLEN      SALES                                                                                                                            
+WARD       SALES                                                                                                                            
+JONES      SALES                                                                                                                            
+MARTIN     SALES                                                                                                                            
+BLAKE      SALES                                                                                                                            
+CLARK      SALES                                                                                                                            
+SCOTT      SALES                                                                                                                            
+KING       SALES                                                                                                                            
+TURNER     SALES                                                                                                                            
+ADAMS      SALES                                                                                                                            
+JAMES      SALES                                                                                                                            
+FORD       SALES                                                                                                                            
+MILLER     SALES                                                                                                                            
+SMITH      OPERATIONS                                                                                                                       
+ALLEN      OPERATIONS                                                                                                                       
+WARD       OPERATIONS                                                                                                                       
+JONES      OPERATIONS                                                                                                                       
+MARTIN     OPERATIONS                                                                                                                       
+BLAKE      OPERATIONS                                                                                                                       
+CLARK      OPERATIONS                                                                                                                       
+SCOTT      OPERATIONS                                                                                                                       
+KING       OPERATIONS                                                                                                                       
+TURNER     OPERATIONS                                                                                                                       
+ADAMS      OPERATIONS                                                                                                                       
+JAMES      OPERATIONS                                                                                                                       
+FORD       OPERATIONS                                                                                                                       
+MILLER     OPERATIONS                                                                                                                       
+
+56 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, dname FROM emp, dept
+  2  WHERE emp.deptno = dept.deptno;
+
+ENAME      DNAME                                                                                                                            
+---------- --------------                                                                                                                   
+CLARK      ACCOUNTING                                                                                                                       
+KING       ACCOUNTING                                                                                                                       
+MILLER     ACCOUNTING                                                                                                                       
+JONES      RESEARCH                                                                                                                         
+FORD       RESEARCH                                                                                                                         
+ADAMS      RESEARCH                                                                                                                         
+SMITH      RESEARCH                                                                                                                         
+SCOTT      RESEARCH                                                                                                                         
+WARD       SALES                                                                                                                            
+TURNER     SALES                                                                                                                            
+ALLEN      SALES                                                                                                                            
+JAMES      SALES                                                                                                                            
+BLAKE      SALES                                                                                                                            
+MARTIN     SALES                                                                                                                            
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, dname FROM emp, dept
+  2  WHERE emp.deptno = dept.deptno AND ename='SCOTT';
+
+ENAME      DNAME                                                                                                                            
+---------- --------------                                                                                                                   
+SCOTT      RESEARCH                                                                                                                         
+
+SQL> SELECT ename, dname, deptno FROM emp, dept
+  2  WHERE emp.deptno = dept.deptno AND ename='SCOTT';
+SELECT ename, dname, deptno FROM emp, dept
+                     *
+1행에 오류:
+ORA-00918: 열의 정의가 애매합니다 
+
+
+SQL> 
+SQL> SELECT emp.ename, dept.dname, emp.deptno FROM emp, dept
+  2  WHERE emp.deptno=dept.deptno AND emp.name='SCOTT';
+WHERE emp.deptno=dept.deptno AND emp.name='SCOTT'
+                                 *
+2행에 오류:
+ORA-00904: "EMP"."NAME": 부적합한 식별자 
+
+
+SQL> SELECT emp.ename, dept.dname, emp.deptno FROM emp, dept
+  2  WHERE emp.deptno=dept.deptno AND emp.ename='SCOTT';
+
+ENAME      DNAME              DEPTNO                                                                                                        
+---------- -------------- ----------                                                                                                        
+SCOTT      RESEARCH               20                                                                                                        
+
+SQL> SELECT emp.ename, dept.dname, emp.deptno
+  2  FROM emp e, dept d
+  3  WHERE emp.deptno=dept.deptno AND emp.ename='SCOTT';
+WHERE emp.deptno=dept.deptno AND emp.ename='SCOTT'
+                                 *
+3행에 오류:
+ORA-00904: "EMP"."ENAME": 부적합한 식별자 
+
+
+SQL> SELECT e.ename, d.dname, e.deptno
+  2  FROM emp e, dept d
+  3  WHERE e.deptno=d.deptno AND e.ename='SCOTT';
+
+ENAME      DNAME              DEPTNO                                                                                                        
+---------- -------------- ----------                                                                                                        
+SCOTT      RESEARCH               20                                                                                                        
+
+SQL> SPOOL OFF

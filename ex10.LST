@@ -1,0 +1,43 @@
+SQL> SET LINESIZE 100
+SQL> SET PAGESIZE 100
+SQL> SELECT SUBSTR('헬로우월드 투 오라클', 3, 2) AS "SUBSTR",
+  2  SUBSTRB('헬로우월드 투 오라클', 3, 2) AS "SUBSTRB"
+  3  FROM dual;
+
+SUBS SU                                                                                             
+---- --                                                                                             
+우월 로                                                                                             
+
+SQL> SELECT INSTR('HelloWorld to Oracle', 'O') FROM dual;
+
+INSTR('HELLOWORLDTOORACLE','O')                                                                     
+-------------------------------                                                                     
+                             15                                                                     
+
+SQL> SELECT INSTR('HelloWorld to Oracle', 'o') FROM dual;
+
+INSTR('HELLOWORLDTOORACLE','O')                                                                     
+-------------------------------                                                                     
+                              5                                                                     
+
+SQL> SELECT INSTR('HelloWorld to Oracle', 'o', 6, 2) FROM dual;
+
+INSTR('HELLOWORLDTOORACLE','O',6,2)                                                                 
+-----------------------------------                                                                 
+                                 13                                                                 
+
+SQL> SELECT LPAD('ORACLE', 20, '#') FROM dual;
+
+LPAD('ORACLE',20,'#'                                                                                
+--------------------                                                                                
+##############ORACLE                                                                                
+
+SQL> SELECT RPAD('ORACLE', 20, '*') FROM dual;
+
+RPAD('ORACLE',20,'*'                                                                                
+--------------------                                                                                
+ORACLE**************                                                                                
+
+SQL> 
+SQL> 
+SQL> SPOOL OFF

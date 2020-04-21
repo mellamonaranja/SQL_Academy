@@ -1,0 +1,286 @@
+SQL> CREATE TABLE emp19(
+  2  empno NUMBER(4) CONSTRAINT emp19_empno_PK PRIMARY KEY,
+  3  ename VARCHAR2(10) CONSTRAINT emp19_ename_NN NOT NULL,
+  4  job VARCHAR2(9),
+  5  deptno NUMBER(2) CONSTRAINT emp19_deptno_FK REFERENCES dept(deptno)
+  6  );
+
+테이블이 생성되었습니다.
+
+SQL> DESC emp19;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                 NOT NULL NUMBER(4)
+ ENAME                                                 NOT NULL VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> DESC emp19;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                 NOT NULL NUMBER(4)
+ ENAME                                                 NOT NULL VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> SELECT * FROM emp19;
+
+선택된 레코드가 없습니다.
+
+SQL> INSERT INTO emp19 VALUES(7500, 'ALICE', 'SALESMAN', 30);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp19;
+
+     EMPNO ENAME      JOB           DEPTNO                                                          
+---------- ---------- --------- ----------                                                          
+      7500 ALICE      SALESMAN          30                                                          
+
+SQL> SELECT * FROM dept;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> INSERT INTO emp19 VALUES(7510, 'TONY', 'MANAGER', 50);
+INSERT INTO emp19 VALUES(7510, 'TONY', 'MANAGER', 50)
+*
+1행에 오류:
+ORA-02291: 무결성 제약조건(SCOTT.EMP19_DEPTNO_FK)이 위배되었습니다- 부모 키가 없습니다 
+
+
+SQL> INSERT INT dept VALUES(50, 'HR', 'SEOUL');
+INSERT INT dept VALUES(50, 'HR', 'SEOUL')
+       *
+1행에 오류:
+ORA-00925: INTO 키워드가 누락되었습니다. 
+
+
+SQL> INSERT INTO dept VALUES(50, 'HR', 'SEOUL');
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM dept;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        50 HR             SEOUL                                                                     
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> INSERT INTO emp19 VALUES(7510, 'TONY', 'MANAGER', 50);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp19;
+
+     EMPNO ENAME      JOB           DEPTNO                                                          
+---------- ---------- --------- ----------                                                          
+      7500 ALICE      SALESMAN          30                                                          
+      7510 TONY       MANAGER           50                                                          
+
+SQL> DELETE FROM dept WHERE deptno=50;
+DELETE FROM dept WHERE deptno=50
+*
+1행에 오류:
+ORA-02292: 무결성 제약조건(SCOTT.EMP19_DEPTNO_FK)이 위배되었습니다- 자식 레코드가 발견되었습니다 
+
+
+SQL> SELECT * FROM dept ORDER BY deptno;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+        50 HR             SEOUL                                                                     
+
+SQL> SELECT * FROM emp19;
+
+     EMPNO ENAME      JOB           DEPTNO                                                          
+---------- ---------- --------- ----------                                                          
+      7500 ALICE      SALESMAN          30                                                          
+      7510 TONY       MANAGER           50                                                          
+
+SQL> DELETE FROM emp19 WHERE empno=7510;
+
+1 행이 삭제되었습니다.
+
+SQL> SELECT * FROM emp19;
+
+     EMPNO ENAME      JOB           DEPTNO                                                          
+---------- ---------- --------- ----------                                                          
+      7500 ALICE      SALESMAN          30                                                          
+
+SQL> DELETE FROM dept WHERE deptno=50;
+
+1 행이 삭제되었습니다.
+
+SQL> SELECT * FROM dept;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> CREATE TABLE emp20(
+  2  empno NUMBER(4) CONSTRAINT emp20_empno_PK PRIMARY KEY,
+  3  ename VARCHAR2(10) CONSTRAINT emp20_ename_NN NOT NULL,
+  4  sal NUMBER(7, 2) CONSTRAINT emp20_sal_CK
+  5  	CHECK (sal BETWEEN 500 AND 5000)00),
+  6  gender VARCHAR2(1) CONSTRAINT emp20_gender_CK
+  7  	CHECK (gender IN('M', 'F', 'T'))
+  8  );
+	CHECK (sal BETWEEN 500 AND 5000)00),
+	                                *
+5행에 오류:
+ORA-00907: 누락된 우괄호 
+
+
+SQL> CREATE TABLE emp20(
+  2  empno NUMBER(4) CONSTRAINT emp20_empno_PK PRIMARY KEY,
+  3  ename VARCHAR2(10) CONSTRAINT emp20_ename_NN NOT NULL,
+  4  sal NUMBER(7, 2) CONSTRAINT emp20_sal_CK
+  5     CHECK (sal BETWEEN 500 AND 5000),
+  6  gender VARCHAR2(1) CONSTRAINT emp20_gender_CK
+  7     CHECK (gender IN('M', 'F', 'T'))
+  8  );
+
+테이블이 생성되었습니다.
+
+SQL> DESC emp20;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                 NOT NULL NUMBER(4)
+ ENAME                                                 NOT NULL VARCHAR2(10)
+ SAL                                                            NUMBER(7,2)
+ GENDER                                                         VARCHAR2(1)
+
+SQL> SELECT * FROM emp20;
+
+선택된 레코드가 없습니다.
+
+SQL> INSERT INTO emp20 VALUES(7500, 'ALICE', 200, 'M');
+INSERT INTO emp20 VALUES(7500, 'ALICE', 200, 'M')
+*
+1행에 오류:
+ORA-02290: 체크 제약조건(SCOTT.EMP20_SAL_CK)이 위배되었습니다 
+
+
+SQL> INSERT INTO emp20 VALUES(7500, 'ALICE', 600, 'A');
+INSERT INTO emp20 VALUES(7500, 'ALICE', 600, 'A')
+*
+1행에 오류:
+ORA-02290: 체크 제약조건(SCOTT.EMP20_GENDER_CK)이 위배되었습니다 
+
+
+SQL> INSERT INTO emp20 VALUES(7500, 'ALICE', 600, 'F');
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp20;
+
+     EMPNO ENAME             SAL G                                                                  
+---------- ---------- ---------- -                                                                  
+      7500 ALICE             600 F                                                                  
+
+SQL> SELECT constraint_name, search_condition
+  2  FROM USER_CONSTRAINTS
+  3  WHERE table_name='EMP20';
+
+CONSTRAINT_NAME                                                                                     
+------------------------------                                                                      
+SEARCH_CONDITION                                                                                    
+--------------------------------------------------------------------------------                    
+EMP20_ENAME_NN                                                                                      
+"ENAME" IS NOT NULL                                                                                 
+                                                                                                    
+EMP20_SAL_CK                                                                                        
+sal BETWEEN 500 AND 5000                                                                            
+                                                                                                    
+EMP20_GENDER_CK                                                                                     
+gender IN('M', 'F', 'T')                                                                            
+                                                                                                    
+EMP20_EMPNO_PK                                                                                      
+                                                                                                    
+                                                                                                    
+
+SQL> SELECT constraint_name, search_condition
+  2  FROM USER_CONSTRAINTS
+  3  WHERE table_name='EMP20';
+
+CONSTRAINT_NAME                                                                                     
+------------------------------                                                                      
+SEARCH_CONDITION                                                                                    
+--------------------------------------------------------------------------------                    
+EMP20_ENAME_NN                                                                                      
+"ENAME" IS NOT NULL                                                                                 
+                                                                                                    
+EMP20_SAL_CK                                                                                        
+sal BETWEEN 500 AND 5000                                                                            
+                                                                                                    
+EMP20_GENDER_CK                                                                                     
+gender IN('M', 'F', 'T')                                                                            
+                                                                                                    
+EMP20_EMPNO_PK                                                                                      
+                                                                                                    
+                                                                                                    
+
+SQL> 
+SQL> 
+SQL> 
+SQL> CREATE TABLE dept14(
+  2  deptno NUMBER(2) CONSTRAINT dept14_deptno_PK PRIMARY KEY,
+  3  dname VARCHAR2(14),
+  4  loc VARCHAR2(13) DEFAULT 'SEOUL'
+  5  );
+
+테이블이 생성되었습니다.
+
+SQL> DESC dept14;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ DEPTNO                                                NOT NULL NUMBER(2)
+ DNAME                                                          VARCHAR2(14)
+ LOC                                                            VARCHAR2(13)
+
+SQL> SELECT * FROM dept14;
+
+선택된 레코드가 없습니다.
+
+SQL> INSERT INTO dept14(deptno, dname)
+  2  VALUES(10, 'ACCOUNTING');
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM dept14;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     SEOUL                                                                     
+
+SQL> INSERT INTO dept14(deptno, dname, loc)
+  2  VALUES(20, 'DESIGN', 'BUSAN');
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM dept14;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     SEOUL                                                                     
+        20 DESIGN         BUSAN                                                                     
+
+SQL> 
+SQL> 
+SQL> 
+SQL> SPOOL OFF

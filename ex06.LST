@@ -1,0 +1,657 @@
+SQL> SELECT ename, empno, deptno, job
+  2  FROM emp
+  3  WHERE job='MANAGER' AND deptno=10;
+
+ENAME           EMPNO     DEPTNO JOB                                                                
+---------- ---------- ---------- ---------                                                          
+CLARK            7782         10 MANAGER                                                            
+
+SQL> SELECT ename, empno, deptno, job
+  2  FROM emp
+  3  WHERE job='MANAGER' AND deptno=10;
+
+ENAME           EMPNO     DEPTNO JOB                                                                
+---------- ---------- ---------- ---------                                                          
+CLARK            7782         10 MANAGER                                                            
+
+SQL> SELECT ename, empno, deptno, job FROM emp
+  2  WHERE deptno=10 OR job='MANAGER';
+
+ENAME           EMPNO     DEPTNO JOB                                                                
+---------- ---------- ---------- ---------                                                          
+JONES            7566         20 MANAGER                                                            
+BLAKE            7698         30 MANAGER                                                            
+CLARK            7782         10 MANAGER                                                            
+KING             7839         10 PRESIDENT                                                          
+MILLER           7934         10 CLERK                                                              
+
+SQL> SELECT ename, empno, deptno, job FROM emp
+  2  WHERE deptno=10;
+
+ENAME           EMPNO     DEPTNO JOB                                                                
+---------- ---------- ---------- ---------                                                          
+CLARK            7782         10 MANAGER                                                            
+KING             7839         10 PRESIDENT                                                          
+MILLER           7934         10 CLERK                                                              
+
+SQL> SELECT ename, empno, deptno, job FROM emp
+  2  WHERE job='MANAGER';
+
+ENAME           EMPNO     DEPTNO JOB                                                                
+---------- ---------- ---------- ---------                                                          
+JONES            7566         20 MANAGER                                                            
+BLAKE            7698         30 MANAGER                                                            
+CLARK            7782         10 MANAGER                                                            
+
+SQL> SELECT * FROM emp
+  2  WHERE deptno=10 AND job='CLERK';
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+SQL> SELECT * FROM emp
+  2  WHERE hiredate>'1982/01/01' OR job='MANAGER';
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+6 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp
+  2  WHERE hiredate>'1982/01/01' OR job='MANAGER';
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+6 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp
+  2  WHERE hiredate>'1982/01/01' AND ob='MANAGER';';
+ERROR:
+ORA-01756: 단일 인용부를 지정해 주십시오 
+
+
+SQL> 
+SQL> SELECT * FROM emp
+  2  WHERE hiredate>'1982/01/01' AND job='MANAGER';';
+ERROR:
+ORA-01756: 단일 인용부를 지정해 주십시오 
+
+
+SQL> SELECT * FROM emp
+  2  WHERE hiredate>'1982/01/01' AND job='MANAGER';
+
+선택된 레코드가 없습니다.
+
+SQL> 
+SQL> SELECT * FROM emp WHERE deptno=10;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+SQL> SELECT * FROM emp WHERE NOT deptno=10;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+
+11 개의 행이 선택되었습니다.
+
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> clear screen
+
+SQL> SELECT * FROM emp WHERE deptno<>10;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+
+11 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp WHERE deptno<>10;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+
+11 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp WHERE deptno NOT 10;
+SELECT * FROM emp WHERE deptno NOT 10
+                                   *
+1행에 오류:
+ORA-00920: 관계 연산자가 부적합합니다 
+
+
+SQL> SELECT * FROM emp
+  2  WHERE sal>=2000 AND sal<=3000;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+
+SQL> SELECT * FROM emp
+  2  WHERE sal BETWEEN 2000 AND 3000;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+
+SQL> SELECT * FROM emp
+  2  WHERE sal<2000 AND sal>3000;
+
+선택된 레코드가 없습니다.
+
+SQL> WHERE sal<2000 OR sal>3000;
+SP2-0734: "WHERE sal<..."(으)로 시작되는 알 수 없는 명령 - 나머지 줄은 무시되었습니다.
+SQL> SELECT * FROM emp
+  2  WHERE sal<2000 OR sal>3000;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+9 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp
+  2  clear screen
+  3  
+SQL> clear screen
+
+SQL> SELECT * FROM emp
+  2  WHERE sal NOT BETWEEN 2000 AND 3000;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+9 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp
+  2  WHERE hiredate BETWEEN '1987/01/01' AND '1987/12/31';
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+
+SQL> SELECT * FROM emp
+  2  WHERE comm=300 OR comm=500 OR comm=1400;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+
+SQL> SELECT * FROM emp
+  2  WHERE comm=300 OR comm=500 OR comm=1400;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+
+SQL> SELECT * FROM emp
+  2  WHERE comm IN(300, 500, 1400);
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+
+SQL> SELECT * FROM emp
+  2  WHERE comm<>300 OR comm<>500 OR comm<>1400;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+
+SQL> SELECT * FROM emp
+  2  WHERE comm<>300 AND comm<>500 AND comm<>1400;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+
+SQL> SELECT * FROM emp
+  2  WHERE comm NOT IN(300, 500, 1400);
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+
+SQL> clear screen
+
+SQL> SELECT * FROM emp WHERE ename='F';
+
+선택된 레코드가 없습니다.
+
+SQL> SELECT * FROM emp WHERE ename='F%';
+
+선택된 레코드가 없습니다.
+
+SQL> SELECT * FROM emp WHERE ename LIKE 'F%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+
+SQL> SELECT * FROM emp WHERE ename LIKE '%A%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+
+7 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp WHERE ename LIKE '%A%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+
+7 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp WHERE ename LIKE '%N';
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+
+SQL> SELECT * FROM emp WHERE ename LIKE '_A%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+
+SQL> SELECT * FROM emp WHERE ename LIKE '__A%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+
+SQL> SELECT * FROM emp WHERE ename LIKE '%_%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp WHERE ename LIKE '%\%%' ESCAPE '\';
+
+선택된 레코드가 없습니다.
+
+SQL> SELECT * FROM emp WHERE ename LIKE '%\_%' ESCAPE '\';
+
+선택된 레코드가 없습니다.
+
+SQL> SELECT * FROM emp WHERE ename LIKE '%A%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+
+7 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp WHERE ename NOT LIKE '%A%';
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+7 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, job, comm FROM emp;
+
+ENAME      JOB             COMM                                                                     
+---------- --------- ----------                                                                     
+SMITH      CLERK                                                                                    
+ALLEN      SALESMAN         300                                                                     
+WARD       SALESMAN         500                                                                     
+JONES      MANAGER                                                                                  
+MARTIN     SALESMAN        1400                                                                     
+BLAKE      MANAGER                                                                                  
+CLARK      MANAGER                                                                                  
+SCOTT      ANALYST                                                                                  
+KING       PRESIDENT                                                                                
+TURNER     SALESMAN           0                                                                     
+ADAMS      CLERK                                                                                    
+JAMES      CLERK                                                                                    
+FORD       ANALYST                                                                                  
+MILLER     CLERK                                                                                    
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, job, comm FROM emp WHERE comm=NULL;
+
+선택된 레코드가 없습니다.
+
+SQL> SELECT ename, job, comm FROM emp WHERE comm IS NULL;
+
+ENAME      JOB             COMM                                                                     
+---------- --------- ----------                                                                     
+SMITH      CLERK                                                                                    
+JONES      MANAGER                                                                                  
+BLAKE      MANAGER                                                                                  
+CLARK      MANAGER                                                                                  
+SCOTT      ANALYST                                                                                  
+KING       PRESIDENT                                                                                
+ADAMS      CLERK                                                                                    
+JAMES      CLERK                                                                                    
+FORD       ANALYST                                                                                  
+MILLER     CLERK                                                                                    
+
+10 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, job, comm FROM emp WHERE comm IS NOT NULL;
+
+ENAME      JOB             COMM                                                                     
+---------- --------- ----------                                                                     
+ALLEN      SALESMAN         300                                                                     
+WARD       SALESMAN         500                                                                     
+MARTIN     SALESMAN        1400                                                                     
+TURNER     SALESMAN           0                                                                     
+
+SQL> SELECT * FROM emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp ORDER BY sal ASC;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp ORDER BY sal;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp ORDER BY sal DESC;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp ORDER BY sal DESC;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+
+14 개의 행이 선택되었습니다.
+
+SQL> 
+SQL> SELECT * FROM emp ORDER BY hiredate DESC;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT deptno FROM emp;
+
+    DEPTNO                                                                                          
+----------                                                                                          
+        20                                                                                          
+        30                                                                                          
+        30                                                                                          
+        20                                                                                          
+        30                                                                                          
+        30                                                                                          
+        10                                                                                          
+        20                                                                                          
+        10                                                                                          
+        30                                                                                          
+        20                                                                                          
+        30                                                                                          
+        20                                                                                          
+        10                                                                                          
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT DISTINCT deptno FROM emp;
+
+    DEPTNO                                                                                          
+----------                                                                                          
+        30                                                                                          
+        20                                                                                          
+        10                                                                                          
+
+SQL> SPOOL OFF

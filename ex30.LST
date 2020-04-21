@@ -1,0 +1,315 @@
+SQL> SELECT empno, ename, deptno
+  2  FROM emp_copy
+  3  WHERE deptno=30;
+
+     EMPNO ENAME          DEPTNO                                                                                                                      
+---------- ---------- ----------                                                                                                                      
+      7499 ALLEN              30                                                                                                                      
+      7521 WARD               30                                                                                                                      
+      7654 MARTIN             30                                                                                                                      
+      7698 BLAKE              30                                                                                                                      
+      7844 TURNER             30                                                                                                                      
+      7900 JAMES              30                                                                                                                      
+
+6 개의 행이 선택되었습니다.
+
+SQL> CREATE VIEW emp_view30
+  2  AS
+  3  SELECT empno, ename, deptno
+  4  FROM emp_copy
+  5  WHERE deptno=30;
+CREATE VIEW emp_view30
+            *
+1행에 오류:
+ORA-01031: 권한이 불충분합니다 
+
+
+SQL> SHOW USER
+USER은 "SCOTT"입니다
+SQL> CREATE VIEW emp_view30
+  2  AS
+  3  SELECT empno, ename, deptno
+  4  FROM emp_copy
+  5  WHERE deptno=30;
+
+뷰가 생성되었습니다.
+
+SQL> SELECT * FROM emp_view30;
+
+     EMPNO ENAME          DEPTNO                                                                                                                      
+---------- ---------- ----------                                                                                                                      
+      7499 ALLEN              30                                                                                                                      
+      7521 WARD               30                                                                                                                      
+      7654 MARTIN             30                                                                                                                      
+      7698 BLAKE              30                                                                                                                      
+      7844 TURNER             30                                                                                                                      
+      7900 JAMES              30                                                                                                                      
+
+6 개의 행이 선택되었습니다.
+
+SQL> DESC emp_view30;
+ 이름                                                                                널?      유형
+ ----------------------------------------------------------------------------------- -------- --------------------------------------------------------
+ EMPNO                                                                                        NUMBER(4)
+ ENAME                                                                                        VARCHAR2(10)
+ DEPTNO                                                                                       NUMBER(2)
+
+SQL> SELECT * FROM emp_view30;
+
+     EMPNO ENAME          DEPTNO                                                                                                                      
+---------- ---------- ----------                                                                                                                      
+      7499 ALLEN              30                                                                                                                      
+      7521 WARD               30                                                                                                                      
+      7654 MARTIN             30                                                                                                                      
+      7698 BLAKE              30                                                                                                                      
+      7844 TURNER             30                                                                                                                      
+      7900 JAMES              30                                                                                                                      
+
+6 개의 행이 선택되었습니다.
+
+SQL> SELECT empno, ename, deptno
+  2  FROM emp_copy
+  3  WHERE deptno=30;
+
+     EMPNO ENAME          DEPTNO                                                                                                                      
+---------- ---------- ----------                                                                                                                      
+      7499 ALLEN              30                                                                                                                      
+      7521 WARD               30                                                                                                                      
+      7654 MARTIN             30                                                                                                                      
+      7698 BLAKE              30                                                                                                                      
+      7844 TURNER             30                                                                                                                      
+      7900 JAMES              30                                                                                                                      
+
+6 개의 행이 선택되었습니다.
+
+SQL> DROP VIEW emp_view30;
+
+뷰가 삭제되었습니다.
+
+SQL> SELECT * FROM emp_view30;
+SELECT * FROM emp_view30
+              *
+1행에 오류:
+ORA-00942: 테이블 또는 뷰가 존재하지 않습니다 
+
+
+SQL> SELECT empno, ename, deptno
+  2  FROM emp_copy
+  3  WHERE deptno=30;
+
+     EMPNO ENAME          DEPTNO                                                                                                                      
+---------- ---------- ----------                                                                                                                      
+      7499 ALLEN              30                                                                                                                      
+      7521 WARD               30                                                                                                                      
+      7654 MARTIN             30                                                                                                                      
+      7698 BLAKE              30                                                                                                                      
+      7844 TURNER             30                                                                                                                      
+      7900 JAMES              30                                                                                                                      
+
+6 개의 행이 선택되었습니다.
+
+SQL> SHOW USER
+USER은 "SCOTT"입니다
+SQL> conn system/oracle_11g
+연결되었습니다.
+SQL> SHOW USER
+USER은 "SYSTEM"입니다
+SQL> GRANT CREATE VIEW TO scott;
+
+권한이 부여되었습니다.
+
+SQL> conn scott/oracle_11g
+연결되었습니다.
+SQL> SHOW USER
+USER은 "SCOTT"입니다
+SQL> 
+SQL> CREATE VIEW emp_view30
+  2  AS
+  3  SELECT empno, ename, deptno FROM emp_copy
+  4  WHERE deptno=30;
+
+뷰가 생성되었습니다.
+
+SQL> SELECT * FROM emp_view30;
+
+     EMPNO ENAME          DEPTNO                                                                                                                      
+---------- ---------- ----------                                                                                                                      
+      7499 ALLEN              30                                                                                                                      
+      7521 WARD               30                                                                                                                      
+      7654 MARTIN             30                                                                                                                      
+      7698 BLAKE              30                                                                                                                      
+      7844 TURNER             30                                                                                                                      
+      7900 JAMES              30                                                                                                                      
+
+6 개의 행이 선택되었습니다.
+
+SQL> DESC USER_VIEWS
+ 이름                                                                                널?      유형
+ ----------------------------------------------------------------------------------- -------- --------------------------------------------------------
+ VIEW_NAME                                                                           NOT NULL VARCHAR2(30)
+ TEXT_LENGTH                                                                                  NUMBER
+ TEXT                                                                                         LONG
+ TYPE_TEXT_LENGTH                                                                             NUMBER
+ TYPE_TEXT                                                                                    VARCHAR2(4000)
+ OID_TEXT_LENGTH                                                                              NUMBER
+ OID_TEXT                                                                                     VARCHAR2(4000)
+ VIEW_TYPE_OWNER                                                                              VARCHAR2(30)
+ VIEW_TYPE                                                                                    VARCHAR2(30)
+ SUPERVIEW_NAME                                                                               VARCHAR2(30)
+ EDITIONING_VIEW                                                                              VARCHAR2(1)
+ READ_ONLY                                                                                    VARCHAR2(1)
+
+SQL> COLUMN view_name FORMAT A15
+SQL> COLUMN text FORMAT A50
+SQL> SELECT view_name, text FROM USER_VIEWS;
+
+VIEW_NAME       TEXT                                                                                                                                  
+--------------- --------------------------------------------------                                                                                    
+EMP_VIEW30      SELECT empno, ename, deptno FROM emp_copy                                                                                             
+                WHERE deptno=30                                                                                                                       
+                                                                                                                                                      
+
+SQL> INSERT INTO emp_view30 VALUES(8000, 'LEWIS', 30);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp_view30;
+
+     EMPNO ENAME          DEPTNO                                                                                                                      
+---------- ---------- ----------                                                                                                                      
+      7499 ALLEN              30                                                                                                                      
+      7521 WARD               30                                                                                                                      
+      7654 MARTIN             30                                                                                                                      
+      7698 BLAKE              30                                                                                                                      
+      7844 TURNER             30                                                                                                                      
+      7900 JAMES              30                                                                                                                      
+      8000 LEWIS              30                                                                                                                      
+
+7 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp_copy;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                                                                  
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                                                                  
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                                                                  
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                                                                  
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                                                                  
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                                                                  
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                                                                  
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                                                                  
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                                                                  
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                                                                  
+      7839 KING       PRESIDENT            81/11/17       5000                    10                                                                  
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                                                                  
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                                                                  
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                                                                  
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                                                                  
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                                                                  
+      8000 LEWIS                                                                  30                                                                  
+
+15 개의 행이 선택되었습니다.
+
+SQL> SELECT e.empno, e.ename, e.sal, e.deptno, d.dname, d.loc
+  2  FROM emp e, dept d
+  3  WHERE e.deptno=d.deptno
+  4  ORDER BY empno DESC;
+
+     EMPNO ENAME             SAL     DEPTNO DNAME          LOC                                                                                        
+---------- ---------- ---------- ---------- -------------- -------------                                                                              
+      7934 MILLER           1300         10 ACCOUNTING     NEW YORK                                                                                   
+      7902 FORD             3000         20 RESEARCH       DALLAS                                                                                     
+      7900 JAMES             950         30 SALES          CHICAGO                                                                                    
+      7876 ADAMS            1100         20 RESEARCH       DALLAS                                                                                     
+      7844 TURNER           1500         30 SALES          CHICAGO                                                                                    
+      7839 KING             5000         10 ACCOUNTING     NEW YORK                                                                                   
+      7788 SCOTT            3000         20 RESEARCH       DALLAS                                                                                     
+      7782 CLARK            2450         10 ACCOUNTING     NEW YORK                                                                                   
+      7698 BLAKE            2850         30 SALES          CHICAGO                                                                                    
+      7654 MARTIN           1250         30 SALES          CHICAGO                                                                                    
+      7566 JONES            2975         20 RESEARCH       DALLAS                                                                                     
+      7521 WARD             1250         30 SALES          CHICAGO                                                                                    
+      7499 ALLEN            1600         30 SALES          CHICAGO                                                                                    
+      7369 SMITH             800         20 RESEARCH       DALLAS                                                                                     
+
+14 개의 행이 선택되었습니다.
+
+SQL> CREATE VIEW emp_view_dept
+  2  AS
+  3  SELECT e.empno, e.ename, e.sal, e.deptno, d.dname, d.loc
+  4  FROM emp e, dept d
+  5  WHERE e.deptno=d.deptno
+  6  ORDER BY empno DESC;
+
+뷰가 생성되었습니다.
+
+SQL> SELECT * FROM emp_view_dept;
+
+     EMPNO ENAME             SAL     DEPTNO DNAME          LOC                                                                                        
+---------- ---------- ---------- ---------- -------------- -------------                                                                              
+      7934 MILLER           1300         10 ACCOUNTING     NEW YORK                                                                                   
+      7902 FORD             3000         20 RESEARCH       DALLAS                                                                                     
+      7900 JAMES             950         30 SALES          CHICAGO                                                                                    
+      7876 ADAMS            1100         20 RESEARCH       DALLAS                                                                                     
+      7844 TURNER           1500         30 SALES          CHICAGO                                                                                    
+      7839 KING             5000         10 ACCOUNTING     NEW YORK                                                                                   
+      7788 SCOTT            3000         20 RESEARCH       DALLAS                                                                                     
+      7782 CLARK            2450         10 ACCOUNTING     NEW YORK                                                                                   
+      7698 BLAKE            2850         30 SALES          CHICAGO                                                                                    
+      7654 MARTIN           1250         30 SALES          CHICAGO                                                                                    
+      7566 JONES            2975         20 RESEARCH       DALLAS                                                                                     
+      7521 WARD             1250         30 SALES          CHICAGO                                                                                    
+      7499 ALLEN            1600         30 SALES          CHICAGO                                                                                    
+      7369 SMITH             800         20 RESEARCH       DALLAS                                                                                     
+
+14 개의 행이 선택되었습니다.
+
+SQL> DESC emp_view_dept;
+ 이름                                                                                널?      유형
+ ----------------------------------------------------------------------------------- -------- --------------------------------------------------------
+ EMPNO                                                                               NOT NULL NUMBER(4)
+ ENAME                                                                                        VARCHAR2(10)
+ SAL                                                                                          NUMBER(7,2)
+ DEPTNO                                                                                       NUMBER(2)
+ DNAME                                                                                        VARCHAR2(14)
+ LOC                                                                                          VARCHAR2(13)
+
+SQL> INSERT INTO emp_view_dept
+  2  VALUES(9000, 'LEWIS', 7000, 20, 'RESEARCH', 'DALLAS');
+INSERT INTO emp_view_dept
+*
+1행에 오류:
+ORA-01776: 조인 뷰에 의하여 하나 이상의 기본 테이블을 수정할 수 없습니다. 
+
+
+SQL> CREATE OR REPLACE VIEW view_chk30
+  2  AS
+  3  SELECT empno, ename, sal, comm, deptno
+  4  FROM emp_copy
+  5  WHERE deptno=30 WITH CHECK OPTION;
+
+뷰가 생성되었습니다.
+
+SQL> SELECT * FROM view_chk30;
+
+     EMPNO ENAME             SAL       COMM     DEPTNO                                                                                                
+---------- ---------- ---------- ---------- ----------                                                                                                
+      7499 ALLEN            1600        300         30                                                                                                
+      7521 WARD             1250        500         30                                                                                                
+      7654 MARTIN           1250       1400         30                                                                                                
+      7698 BLAKE            2850                    30                                                                                                
+      7844 TURNER           1500          0         30                                                                                                
+      7900 JAMES             950                    30                                                                                                
+      8000 LEWIS                                    30                                                                                                
+
+7 개의 행이 선택되었습니다.
+
+SQL> UPDATE view_chk30
+  2  SET deptno=20
+  3  WHERE sal>=1200;
+UPDATE view_chk30
+       *
+1행에 오류:
+ORA-01402: 뷰의 WITH CHECK OPTION의 조건에 위배 됩니다 
+
+
+SQL> SPOOL OFF

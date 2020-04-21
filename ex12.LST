@@ -1,0 +1,277 @@
+SQL> SELECT ename, hiredate FROM emp
+  2  WHERE hiredate=19810220;
+WHERE hiredate=19810220
+              *
+2행에 오류:
+ORA-00932: 일관성 없는 데이터 유형: DATE이(가) 필요하지만 NUMBER임 
+
+
+SQL> DESC emp;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                 NOT NULL NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ MGR                                                            NUMBER(4)
+ HIREDATE                                                       DATE
+ SAL                                                            NUMBER(7,2)
+ COMM                                                           NUMBER(7,2)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> SELECT ename, hiredate FROM emp
+  2  WHERE hiredate=TO_DATE(19810220, 'YYYYMMDD');
+
+ENAME      HIREDATE                                                                                 
+---------- --------                                                                                 
+ALLEN      81/02/20                                                                                 
+
+SQL> SELECT
+  2  sysdate - '2019/01/01'
+  3  FROM dual;
+sysdate - '2019/01/01'
+          *
+2행에 오류:
+ORA-01722: 수치가 부적합합니다 
+
+
+SQL> SELECT
+  2  sysdate - TO_DATE('2019/01/01', 'YYYY/MM/DD')
+  3  FROM dual;
+
+SYSDATE-TO_DATE('2019/01/01','YYYY/MM/DD')                                                          
+------------------------------------------                                                          
+                                349.510833                                                          
+
+SQL> SELECT
+  2  TRUNC(sysdate - TO_DATE('2019/01/01', 'YYYY/MM/DD'))
+  3  FROM dual;
+
+TRUNC(SYSDATE-TO_DATE('2019/01/01','YYYY/MM/DD'))                                                   
+-------------------------------------------------                                                   
+                                              349                                                   
+
+SQL> SELECT '20,000' - '10,000' FROM dual;
+SELECT '20,000' - '10,000' FROM dual
+       *
+1행에 오류:
+ORA-01722: 수치가 부적합합니다 
+
+
+SQL> SELECT 20000 - 10000 FROM dual;
+
+20000-10000                                                                                         
+-----------                                                                                         
+      10000                                                                                         
+
+SQL> SELECT
+  2  TO_NUMBER('20,000', '99,999') - TO_NUMBER('10,000', '99,999')
+  3  FROM dual;
+
+TO_NUMBER('20,000','99,999')-TO_NUMBER('10,000','99,999')                                           
+---------------------------------------------------------                                           
+                                                    10000                                           
+
+SQL> SELECT
+  2  TO_NUMBER('20,000', '99,000') - TO_NUMBER('10,000', '99,999')
+  3  FROM dual;
+
+TO_NUMBER('20,000','99,000')-TO_NUMBER('10,000','99,999')                                           
+---------------------------------------------------------                                           
+                                                    10000                                           
+
+SQL> SELECT sysdate FROM dual;
+
+SYSDATE                                                                                             
+--------                                                                                            
+19/12/16                                                                                            
+
+SQL> SELECT TO_CHAR(sysdate, 'yyyy/mm/dd') FROM dual;
+
+TO_CHAR(SY                                                                                          
+----------                                                                                          
+2019/12/16                                                                                          
+
+SQL> SELECT TO_CHAR(sysdate+1, 'yyyy/mm/dd') FROM dual;
+
+TO_CHAR(SY                                                                                          
+----------                                                                                          
+2019/12/17                                                                                          
+
+SQL> SELECT TO_CHAR(sysdate, 'yyyy/mm/dd hh24:mi:ss') FROM dual;
+
+TO_CHAR(SYSDATE,'YY                                                                                 
+-------------------                                                                                 
+2019/12/16 12:26:07                                                                                 
+
+SQL> SELECT ename, sal, comm, job
+  2  FROM emp;
+
+ENAME             SAL       COMM JOB                                                                
+---------- ---------- ---------- ---------                                                          
+SMITH             800            CLERK                                                              
+ALLEN            1600        300 SALESMAN                                                           
+WARD             1250        500 SALESMAN                                                           
+JONES            2975            MANAGER                                                            
+MARTIN           1250       1400 SALESMAN                                                           
+BLAKE            2850            MANAGER                                                            
+CLARK            2450            MANAGER                                                            
+SCOTT            3000            ANALYST                                                            
+KING             5000            PRESIDENT                                                          
+TURNER           1500          0 SALESMAN                                                           
+ADAMS            1100            CLERK                                                              
+JAMES             950            CLERK                                                              
+FORD             3000            ANALYST                                                            
+MILLER           1300            CLERK                                                              
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, sal, comm, job
+  2  FROM emp
+  3  ORDER BY job;
+
+ENAME             SAL       COMM JOB                                                                
+---------- ---------- ---------- ---------                                                          
+SCOTT            3000            ANALYST                                                            
+FORD             3000            ANALYST                                                            
+MILLER           1300            CLERK                                                              
+JAMES             950            CLERK                                                              
+SMITH             800            CLERK                                                              
+ADAMS            1100            CLERK                                                              
+BLAKE            2850            MANAGER                                                            
+JONES            2975            MANAGER                                                            
+CLARK            2450            MANAGER                                                            
+KING             5000            PRESIDENT                                                          
+TURNER           1500          0 SALESMAN                                                           
+MARTIN           1250       1400 SALESMAN                                                           
+WARD             1250        500 SALESMAN                                                           
+ALLEN            1600        300 SALESMAN                                                           
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, sal, comm, job, sal*12+COMM
+  2  FROM emp ORDER BY job;
+
+ENAME             SAL       COMM JOB       SAL*12+COMM                                              
+---------- ---------- ---------- --------- -----------                                              
+SCOTT            3000            ANALYST                                                            
+FORD             3000            ANALYST                                                            
+MILLER           1300            CLERK                                                              
+JAMES             950            CLERK                                                              
+SMITH             800            CLERK                                                              
+ADAMS            1100            CLERK                                                              
+BLAKE            2850            MANAGER                                                            
+JONES            2975            MANAGER                                                            
+CLARK            2450            MANAGER                                                            
+KING             5000            PRESIDENT                                                          
+TURNER           1500          0 SALESMAN        18000                                              
+MARTIN           1250       1400 SALESMAN        16400                                              
+WARD             1250        500 SALESMAN        15500                                              
+ALLEN            1600        300 SALESMAN        19500                                              
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT ename, sal, comm, job, sal*12+COMM, NVL(comm, 0)
+  2  FROM emp ORDER BY job;
+
+ENAME             SAL       COMM JOB       SAL*12+COMM NVL(COMM,0)                                  
+---------- ---------- ---------- --------- ----------- -----------                                  
+SCOTT            3000            ANALYST                         0                                  
+FORD             3000            ANALYST                         0                                  
+MILLER           1300            CLERK                           0                                  
+JAMES             950            CLERK                           0                                  
+SMITH             800            CLERK                           0                                  
+ADAMS            1100            CLERK                           0                                  
+BLAKE            2850            MANAGER                         0                                  
+JONES            2975            MANAGER                         0                                  
+CLARK            2450            MANAGER                         0                                  
+KING             5000            PRESIDENT                       0                                  
+TURNER           1500          0 SALESMAN        18000           0                                  
+MARTIN           1250       1400 SALESMAN        16400        1400                                  
+WARD             1250        500 SALESMAN        15500         500                                  
+ALLEN            1600        300 SALESMAN        19500         300                                  
+
+14 개의 행이 선택되었습니다.
+
+SQL> clear screen
+
+SQL> SELECT ename, sal, comm, job, sal*12+COMM, NVL(comm, 0),
+  2  sal+12+NVL(comm, 0)
+  3  FROM emp ORDER BY job;
+
+ENAME             SAL       COMM JOB       SAL*12+COMM NVL(COMM,0) SAL+12+NVL(COMM,0)               
+---------- ---------- ---------- --------- ----------- ----------- ------------------               
+SCOTT            3000            ANALYST                         0               3012               
+FORD             3000            ANALYST                         0               3012               
+MILLER           1300            CLERK                           0               1312               
+JAMES             950            CLERK                           0                962               
+SMITH             800            CLERK                           0                812               
+ADAMS            1100            CLERK                           0               1112               
+BLAKE            2850            MANAGER                         0               2862               
+JONES            2975            MANAGER                         0               2987               
+CLARK            2450            MANAGER                         0               2462               
+KING             5000            PRESIDENT                       0               5012               
+TURNER           1500          0 SALESMAN        18000           0               1512               
+MARTIN           1250       1400 SALESMAN        16400        1400               2662               
+WARD             1250        500 SALESMAN        15500         500               1762               
+ALLEN            1600        300 SALESMAN        19500         300               1912               
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT deptno FROM emp ORDER BY deptno;
+
+    DEPTNO                                                                                          
+----------                                                                                          
+        10                                                                                          
+        10                                                                                          
+        10                                                                                          
+        20                                                                                          
+        20                                                                                          
+        20                                                                                          
+        20                                                                                          
+        20                                                                                          
+        30                                                                                          
+        30                                                                                          
+        30                                                                                          
+        30                                                                                          
+        30                                                                                          
+        30                                                                                          
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT DISTINCT deptno FROM emp ORDER BY deptno;
+
+    DEPTNO                                                                                          
+----------                                                                                          
+        10                                                                                          
+        20                                                                                          
+        30                                                                                          
+
+SQL> SELECT deptno,
+  2  DECODE(deptno,
+  3  	10, 'ACCOUNTING',
+  4  	20, 'DEVELOPMENT',
+  5  	'DEFAULT')
+  6  FROM emp ORDER BY deptno;
+
+    DEPTNO DECODE(DEPT                                                                              
+---------- -----------                                                                              
+        10 ACCOUNTING                                                                               
+        10 ACCOUNTING                                                                               
+        10 ACCOUNTING                                                                               
+        20 DEVELOPMENT                                                                              
+        20 DEVELOPMENT                                                                              
+        20 DEVELOPMENT                                                                              
+        20 DEVELOPMENT                                                                              
+        20 DEVELOPMENT                                                                              
+        30 DEFAULT                                                                                  
+        30 DEFAULT                                                                                  
+        30 DEFAULT                                                                                  
+        30 DEFAULT                                                                                  
+        30 DEFAULT                                                                                  
+        30 DEFAULT                                                                                  
+
+14 개의 행이 선택되었습니다.
+
+SQL> 
+SQL> 
+SQL> SPOOL OFF

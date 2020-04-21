@@ -1,0 +1,273 @@
+SQL> CREATE TABLE emp16(
+  2  empno NUMBER(4) CONSTRAINT emp16_empno_UK UNIQUE,
+  3  ename VARCHAR2(10) CONSTRAINT emp16_ename_NN NOT NULL,
+  4  job VARCHAR2(9),
+  5  deptno NUMBER(2)
+  6  );
+
+테이블이 생성되었습니다.
+
+SQL> DESCT emp16;
+SP2-0734: "DESCT emp1..."(으)로 시작되는 알 수 없는 명령 - 나머지 줄은 무시되었습니다.
+SQL> DESC emp16;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                 NOT NULL VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> SELECT * FROM emp16;
+
+선택된 레코드가 없습니다.
+
+SQL> DESC USER_CONSTRAINTS
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ OWNER                                                          VARCHAR2(30)
+ CONSTRAINT_NAME                                       NOT NULL VARCHAR2(30)
+ CONSTRAINT_TYPE                                                VARCHAR2(1)
+ TABLE_NAME                                            NOT NULL VARCHAR2(30)
+ SEARCH_CONDITION                                               LONG
+ R_OWNER                                                        VARCHAR2(30)
+ R_CONSTRAINT_NAME                                              VARCHAR2(30)
+ DELETE_RULE                                                    VARCHAR2(9)
+ STATUS                                                         VARCHAR2(8)
+ DEFERRABLE                                                     VARCHAR2(14)
+ DEFERRED                                                       VARCHAR2(9)
+ VALIDATED                                                      VARCHAR2(13)
+ GENERATED                                                      VARCHAR2(14)
+ BAD                                                            VARCHAR2(3)
+ RELY                                                           VARCHAR2(4)
+ LAST_CHANGE                                                    DATE
+ INDEX_OWNER                                                    VARCHAR2(30)
+ INDEX_NAME                                                     VARCHAR2(30)
+ INVALID                                                        VARCHAR2(7)
+ VIEW_RELATED                                                   VARCHAR2(14)
+
+SQL> SELECT table_name, constraint_name
+  2  FROM USER_CONSTRAINTS;
+
+TABLE_NAME                     CONSTRAINT_NAME                                                      
+------------------------------ ------------------------------                                       
+EMP14                          SYS_C0011188                                                         
+EMP14                          SYS_C0011189                                                         
+EMP15                          SYS_C0011190                                                         
+EMP16                          EMP16_ENAME_NN                                                       
+EMP                            FK_DEPTNO                                                            
+DEPT                           PK_DEPT                                                              
+EMP                            PK_EMP                                                               
+EMP15                          SYS_C0011191                                                         
+EMP16                          EMP16_EMPNO_UK                                                       
+
+9 개의 행이 선택되었습니다.
+
+SQL> SELECT table_name, constraint_name
+  2  FROM USER_CONSTRAINTS
+  3  WHERE table_name='emp16';
+
+선택된 레코드가 없습니다.
+
+SQL> SELECT table_name, constraint_name
+  2  FROM USER_CONSTRAINTS
+  3  WHERE table_name='EMP16';
+
+TABLE_NAME                     CONSTRAINT_NAME                                                      
+------------------------------ ------------------------------                                       
+EMP16                          EMP16_ENAME_NN                                                       
+EMP16                          EMP16_EMPNO_UK                                                       
+
+SQL> INSERT INTO emp16 VALUES(7500, 'JACK', 'AGENT1', 20);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp16;
+
+     EMPNO ENAME      JOB           DEPTNO                                                          
+---------- ---------- --------- ----------                                                          
+      7500 JACK       AGENT1            20                                                          
+
+SQL> INSERT INTO emp16 VALUES(7500, 'ETHAN', 'AGENT2', 30);
+INSERT INTO emp16 VALUES(7500, 'ETHAN', 'AGENT2', 30)
+*
+1행에 오류:
+ORA-00001: 무결성 제약 조건(SCOTT.EMP16_EMPNO_UK)에 위배됩니다 
+
+
+SQL> INSERT INTO emp16 VALUES(7600, 'ETHAN', 'AGENT2', 30);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> CREATE TABLE emp18(
+  2  empno NUMBER(4) CONSTRAINT emp18_empno_PK PRIMARY KEY,
+  3  ename VARCHAR2(10) CONSTRAINT emp18_ename_NN NOT NULL,
+  4  job VARCHAR2(9),
+  5  deptno NUMBER(2)
+  6  );
+
+테이블이 생성되었습니다.
+
+SQL> DESC emp18;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                 NOT NULL NUMBER(4)
+ ENAME                                                 NOT NULL VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> SELECT * FROM emp18;
+
+선택된 레코드가 없습니다.
+
+SQL> INSERT INTO emp18
+  2  
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT * FROM emp18;
+
+선택된 레코드가 없습니다.
+
+SQL> clear screen
+
+SQL> SELECT * FROM emp18;
+
+선택된 레코드가 없습니다.
+
+SQL> INSERT INTO emp18 VALUES(7500, 'ALICE', 'SALESMAN', 30);
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM emp18;
+
+     EMPNO ENAME      JOB           DEPTNO                                                          
+---------- ---------- --------- ----------                                                          
+      7500 ALICE      SALESMAN          30                                                          
+
+SQL> INSERT INTO emp18 VALUES(7500, 'Lois', 'MANAGER', 20);
+INSERT INTO emp18 VALUES(7500, 'Lois', 'MANAGER', 20)
+*
+1행에 오류:
+ORA-00001: 무결성 제약 조건(SCOTT.EMP18_EMPNO_PK)에 위배됩니다 
+
+
+SQL> INSERT INTO emp18 VALUES(NULL, 'Lois', 'MANAGER', 20);
+INSERT INTO emp18 VALUES(NULL, 'Lois', 'MANAGER', 20)
+                         *
+1행에 오류:
+ORA-01400: NULL을 ("SCOTT"."EMP18"."EMPNO") 안에 삽입할 수 없습니다 
+
+
+SQL> SELECT table_name, constraint_name
+  2  FROM USER_CONSTRAINTS
+  3  WHERE table_name='DEPT';
+
+TABLE_NAME                     CONSTRAINT_NAME                                                      
+------------------------------ ------------------------------                                       
+DEPT                           PK_DEPT                                                              
+
+SQL> SELET * FROM dept;
+SP2-0734: "SELET * FR..."(으)로 시작되는 알 수 없는 명령 - 나머지 줄은 무시되었습니다.
+SQL> SELECT * FROM dept;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> DESC dept;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ DEPTNO                                                NOT NULL NUMBER(2)
+ DNAME                                                          VARCHAR2(14)
+ LOC                                                            VARCHAR2(13)
+
+SQL> SELECT table_name, constraint_name
+  2  FROM USER_CONSTRAINTS
+  3  WHERE table_name='EMP';
+
+TABLE_NAME                     CONSTRAINT_NAME                                                      
+------------------------------ ------------------------------                                       
+EMP                            PK_EMP                                                               
+EMP                            FK_DEPTNO                                                            
+
+SQL> SELECT * FROM emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+14 개의 행이 선택되었습니다.
+
+SQL> SELECT * FROM dept;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> INSERT INTO emp(empno, ename, deptno)
+  2  VALUES(8000, 'FALCON', 50);
+INSERT INTO emp(empno, ename, deptno)
+*
+1행에 오류:
+ORA-02291: 무결성 제약조건(SCOTT.FK_DEPTNO)이 위배되었습니다- 부모 키가 없습니다 
+
+
+SQL> SELECT table_name, constraint_name, constraint_type, r_constraint_name
+  2  FROM USER_CONSTRAINTS
+  3  WHERE table_name IN ('DEPT', 'EMP');
+
+TABLE_NAME                     CONSTRAINT_NAME                C R_CONSTRAINT_NAME                   
+------------------------------ ------------------------------ - ------------------------------      
+DEPT                           PK_DEPT                        P                                     
+EMP                            PK_EMP                         P                                     
+EMP                            FK_DEPTNO                      R PK_DEPT                             
+
+SQL> SPOOL OFF

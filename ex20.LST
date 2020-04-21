@@ -1,0 +1,345 @@
+SQL> DESC emp02;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ MGR                                                            NUMBER(4)
+ HIREDATE                                                       DATE
+ SAL                                                            NUMBER(7,2)
+ COMM                                                           NUMBER(7,2)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> ALTER TABLE emp02 SET UNUSED(job);
+
+테이블이 변경되었습니다.
+
+SQL> DESC emp02;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ MGR                                                            NUMBER(4)
+ HIREDATE                                                       DATE
+ SAL                                                            NUMBER(7,2)
+ COMM                                                           NUMBER(7,2)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> DESC USER_UNUSED_COL_TABS;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ TABLE_NAME                                            NOT NULL VARCHAR2(30)
+ COUNT                                                          NUMBER
+
+SQL> SELECT * FROM USER_UNUED_COL_TABS;
+SELECT * FROM USER_UNUED_COL_TABS
+              *
+1행에 오류:
+ORA-00942: 테이블 또는 뷰가 존재하지 않습니다 
+
+
+SQL> SELECT * FROM USER_UNUSED_COL_TABS;
+
+TABLE_NAME                          COUNT                                                           
+------------------------------ ----------                                                           
+EMP02                                   1                                                           
+
+SQL> ALTER TABLE emp02 DROP UNUSED COLUMNS;
+
+테이블이 변경되었습니다.
+
+SQL> SELECT * FROM USER_UNUSED_COL_TABS;
+
+선택된 레코드가 없습니다.
+
+SQL> SELECT * FROM emp01;
+
+선택된 레코드가 없습니다.
+
+SQL> DESC emp01;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                          VARCHAR2(20)
+ SAL                                                            NUMBER(7,2)
+
+SQL> DROP TABLE emp01;
+
+테이블이 삭제되었습니다.
+
+SQL> SELECT * FROM emp01;
+SELECT * FROM emp01
+              *
+1행에 오류:
+ORA-00942: 테이블 또는 뷰가 존재하지 않습니다 
+
+
+SQL> DESC emp01;
+ERROR:
+ORA-04043: emp01 객체는 존재하지 않습니다. 
+
+
+SQL> SELECT * FROM emp02;
+
+     EMPNO ENAME             MGR HIREDATE        SAL       COMM     DEPTNO                          
+---------- ---------- ---------- -------- ---------- ---------- ----------                          
+      7369 SMITH            7902 80/12/17        800                    20                          
+      7499 ALLEN            7698 81/02/20       1600        300         30                          
+      7521 WARD             7698 81/02/22       1250        500         30                          
+      7566 JONES            7839 81/04/02       2975                    20                          
+      7654 MARTIN           7698 81/09/28       1250       1400         30                          
+      7698 BLAKE            7839 81/05/01       2850                    30                          
+      7782 CLARK            7839 81/06/09       2450                    10                          
+      7788 SCOTT            7566 87/04/19       3000                    20                          
+      7839 KING                  81/11/17       5000                    10                          
+      7844 TURNER           7698 81/09/08       1500          0         30                          
+      7876 ADAMS            7788 87/05/23       1100                    20                          
+      7900 JAMES            7698 81/12/03        950                    30                          
+      7902 FORD             7566 81/12/03       3000                    20                          
+      7934 MILLER           7782 82/01/23       1300                    10                          
+
+14 개의 행이 선택되었습니다.
+
+SQL> 
+SQL> DESC emp02;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ MGR                                                            NUMBER(4)
+ HIREDATE                                                       DATE
+ SAL                                                            NUMBER(7,2)
+ COMM                                                           NUMBER(7,2)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> TRUNCATE TABLE emp02;
+
+테이블이 잘렸습니다.
+
+SQL> SELECT * FROM emp02;
+
+선택된 레코드가 없습니다.
+
+SQL> DESC emp02;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ MGR                                                            NUMBER(4)
+ HIREDATE                                                       DATE
+ SAL                                                            NUMBER(7,2)
+ COMM                                                           NUMBER(7,2)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> CREATE TABLE emp06
+  2  AS SELECT * FROM emp;
+
+테이블이 생성되었습니다.
+
+SQL> SELECT * FROM emp06
+  2  ;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+14 개의 행이 선택되었습니다.
+
+SQL> DESC emp06;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ EMPNO                                                          NUMBER(4)
+ ENAME                                                          VARCHAR2(10)
+ JOB                                                            VARCHAR2(9)
+ MGR                                                            NUMBER(4)
+ HIREDATE                                                       DATE
+ SAL                                                            NUMBER(7,2)
+ COMM                                                           NUMBER(7,2)
+ DEPTNO                                                         NUMBER(2)
+
+SQL> SELECT * FROM test;
+SELECT * FROM test
+              *
+1행에 오류:
+ORA-00942: 테이블 또는 뷰가 존재하지 않습니다 
+
+
+SQL> RENAME emp06 TO test;
+
+테이블 이름이 변경되었습니다.
+
+SQL> SELECT * FROM emp06;
+SELECT * FROM emp06
+              *
+1행에 오류:
+ORA-00942: 테이블 또는 뷰가 존재하지 않습니다 
+
+
+SQL> SELECT * FROM test;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+14 개의 행이 선택되었습니다.
+
+SQL> DESC USER_TABLES;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ TABLE_NAME                                            NOT NULL VARCHAR2(30)
+ TABLESPACE_NAME                                                VARCHAR2(30)
+ CLUSTER_NAME                                                   VARCHAR2(30)
+ IOT_NAME                                                       VARCHAR2(30)
+ STATUS                                                         VARCHAR2(8)
+ PCT_FREE                                                       NUMBER
+ PCT_USED                                                       NUMBER
+ INI_TRANS                                                      NUMBER
+ MAX_TRANS                                                      NUMBER
+ INITIAL_EXTENT                                                 NUMBER
+ NEXT_EXTENT                                                    NUMBER
+ MIN_EXTENTS                                                    NUMBER
+ MAX_EXTENTS                                                    NUMBER
+ PCT_INCREASE                                                   NUMBER
+ FREELISTS                                                      NUMBER
+ FREELIST_GROUPS                                                NUMBER
+ LOGGING                                                        VARCHAR2(3)
+ BACKED_UP                                                      VARCHAR2(1)
+ NUM_ROWS                                                       NUMBER
+ BLOCKS                                                         NUMBER
+ EMPTY_BLOCKS                                                   NUMBER
+ AVG_SPACE                                                      NUMBER
+ CHAIN_CNT                                                      NUMBER
+ AVG_ROW_LEN                                                    NUMBER
+ AVG_SPACE_FREELIST_BLOCKS                                      NUMBER
+ NUM_FREELIST_BLOCKS                                            NUMBER
+ DEGREE                                                         VARCHAR2(10)
+ INSTANCES                                                      VARCHAR2(10)
+ CACHE                                                          VARCHAR2(5)
+ TABLE_LOCK                                                     VARCHAR2(8)
+ SAMPLE_SIZE                                                    NUMBER
+ LAST_ANALYZED                                                  DATE
+ PARTITIONED                                                    VARCHAR2(3)
+ IOT_TYPE                                                       VARCHAR2(12)
+ TEMPORARY                                                      VARCHAR2(1)
+ SECONDARY                                                      VARCHAR2(1)
+ NESTED                                                         VARCHAR2(3)
+ BUFFER_POOL                                                    VARCHAR2(7)
+ FLASH_CACHE                                                    VARCHAR2(7)
+ CELL_FLASH_CACHE                                               VARCHAR2(7)
+ ROW_MOVEMENT                                                   VARCHAR2(8)
+ GLOBAL_STATS                                                   VARCHAR2(3)
+ USER_STATS                                                     VARCHAR2(3)
+ DURATION                                                       VARCHAR2(15)
+ SKIP_CORRUPT                                                   VARCHAR2(8)
+ MONITORING                                                     VARCHAR2(3)
+ CLUSTER_OWNER                                                  VARCHAR2(30)
+ DEPENDENCIES                                                   VARCHAR2(8)
+ COMPRESSION                                                    VARCHAR2(8)
+ COMPRESS_FOR                                                   VARCHAR2(12)
+ DROPPED                                                        VARCHAR2(3)
+ READ_ONLY                                                      VARCHAR2(3)
+ SEGMENT_CREATED                                                VARCHAR2(3)
+ RESULT_CACHE                                                   VARCHAR2(7)
+
+SQL> SHOW USER;
+USER은 "SCOTT"입니다
+SQL> SELECT TABLE_NAME FROM USER_TABLES
+  2  ODER BY TABLE_NAME DESC;
+ODER BY TABLE_NAME DESC
+     *
+2행에 오류:
+ORA-00933: SQL 명령어가 올바르게 종료되지 않았습니다 
+
+
+SQL> SELECT TABLE_NAME FROM USER_TABLES
+  2  ORDER BY TABLE_NAME DESC;
+
+TABLE_NAME                                                                                          
+------------------------------                                                                      
+TESTPY                                                                                              
+TEST                                                                                                
+SALGRADE                                                                                            
+EMP05                                                                                               
+EMP04                                                                                               
+EMP03                                                                                               
+EMP02                                                                                               
+EMP                                                                                                 
+DEPT                                                                                                
+BONUS                                                                                               
+
+10 개의 행이 선택되었습니다.
+
+SQL> 
+SQL> 
+SQL> 
+SQL> clear screen
+
+SQL> CREATE TABLE dept01(
+  2  deptno	NUMBER(2),
+  3  dname	VARCHAR2(14),
+  4  loc	VARCHAR2(13)
+  5  );
+
+테이블이 생성되었습니다.
+
+SQL> DESC dept01;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ DEPTNO                                                         NUMBER(2)
+ DNAME                                                          VARCHAR2(14)
+ LOC                                                            VARCHAR2(13)
+
+SQL> SELECT * FROM dept01;
+
+선택된 레코드가 없습니다.
+
+SQL> CREATE TABLE dept02
+  2  AS SELECT * FROM dept WHERE 1=0;
+
+테이블이 생성되었습니다.
+
+SQL> DESC dept02;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ DEPTNO                                                         NUMBER(2)
+ DNAME                                                          VARCHAR2(14)
+ LOC                                                            VARCHAR2(13)
+
+SQL> INSERT INTO dept02(deptno, dname, loc)
+  2  VALUES(10, 'ACCOUNTING', 'NEW YORK');
+
+1 개의 행이 만들어졌습니다.
+
+SQL> SELECT * FROM dept02;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+
+SQL> SPOOL OFF

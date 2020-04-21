@@ -1,0 +1,242 @@
+SQL> SHOW USER
+USER은 "SCOTT"입니다
+SQL> conn system/oracle_11g
+연결되었습니다.
+SQL> SHOW USER
+USER은 "SYSTEM"입니다
+SQL> CREATE USER labuser IDENTIFIED BY oracle_11g;
+
+사용자가 생성되었습니다.
+
+경   과: 00:00:00.22
+SQL> conn labuser/oracle_11g
+ERROR:
+ORA-01045: user LABUSER lacks CREATE SESSION privilege; logon denied 
+
+
+경고: 이제는 ORACLE에 연결되어 있지 않습니다.
+SQL> SHOW USER
+USER은 ""입니다
+SQL> conn system/oracle_11g
+연결되었습니다.
+SQL> SHOW USER
+USER은 "SYSTEM"입니다
+SQL> GRANT CREATE SESSION TO labuser;
+
+권한이 부여되었습니다.
+
+경   과: 00:00:00.01
+SQL> conn labuser/oracle_11g
+연결되었습니다.
+SQL> SHOW USER
+USER은 "LABUSER"입니다
+SQL> conn system/oracle_11g
+연결되었습니다.
+SQL> CREATE USER labuser01 IDENTIFIED BY oracle_11g;
+
+사용자가 생성되었습니다.
+
+경   과: 00:00:00.02
+SQL> GRANT CREATE SESSION TO labuser01
+  2  WITH ADMIN OPTION;
+
+권한이 부여되었습니다.
+
+경   과: 00:00:00.00
+SQL> conn labuser01/oracle_11g
+연결되었습니다.
+SQL> SHOW USER
+USER은 "LABUSER01"입니다
+SQL> GRANT CREATE SESSION TO labuser;
+
+권한이 부여되었습니다.
+
+경   과: 00:00:00.01
+SQL> conn labuser/oracle_11g
+연결되었습니다.
+SQL> SHOW USER
+USER은 "LABUSER"입니다
+SQL> GRANT CREATE SESSION TO labuser01;
+GRANT CREATE SESSION TO labuser01
+*
+1행에 오류:
+ORA-01031: 권한이 불충분합니다 
+
+
+경   과: 00:00:00.01
+SQL> SHOW USER
+USER은 "LABUSER"입니다
+SQL> SELECT * FROM emp;
+SELECT * FROM emp
+              *
+1행에 오류:
+ORA-00942: 테이블 또는 뷰가 존재하지 않습니다 
+
+
+경   과: 00:00:00.00
+SQL> conn scott/oracle_11g
+연결되었습니다.
+SQL> SHOW USER
+USER은 "SCOTT"입니다
+SQL> GRANT SELECT ON emp TO labuser;
+
+권한이 부여되었습니다.
+
+경   과: 00:00:00.07
+SQL> conn labuser/oracle_11g
+연결되었습니다.
+SQL> SHOW USER
+USER은 "LABUSER"입니다
+SQL> SELECT * FROM emp;
+SELECT * FROM emp
+              *
+1행에 오류:
+ORA-00942: 테이블 또는 뷰가 존재하지 않습니다 
+
+
+경   과: 00:00:00.00
+SQL> SELECT * FROM scott.emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+14 개의 행이 선택되었습니다.
+
+경   과: 00:00:00.03
+SQL> 
+SQL> 
+SQL> SHOW USER
+USER은 "LABUSER"입니다
+SQL> SELECT * FROM USER_TAB_PRIVS_MADE;
+
+선택된 레코드가 없습니다.
+
+경   과: 00:00:00.13
+SQL> SELECT * FROM USER_TAB_PRIVS_RECD;
+
+OWNER                          TABLE_NAME      GRANTOR                                              
+------------------------------ --------------- ------------------------------                       
+PRIVILEGE                                GRA HIE                                                    
+---------------------------------------- --- ---                                                    
+SCOTT                          EMP             SCOTT                                                
+SELECT                                   NO  NO                                                     
+                                                                                                    
+
+경   과: 00:00:00.16
+SQL> COL OWNER FROMAT A10;
+SP2-0158: 알 수 없는 COLUMN 옵션 "FROMAT"
+SQL> COL OWNER FORMAT A10;
+SQL> COL TABLE_NAME FORMAT A10;
+SQL> COL GRANTOR FORMAT A15;
+SQL> COL PRIVILEGE FORMAT A20;
+SQL> SELECT * FROM USER_TAB_PRIVS_RECD;
+
+OWNER      TABLE_NAME GRANTOR         PRIVILEGE            GRA HIE                                  
+---------- ---------- --------------- -------------------- --- ---                                  
+SCOTT      EMP        SCOTT           SELECT               NO  NO                                   
+
+경   과: 00:00:00.02
+SQL> conn scott/oracle_11g
+연결되었습니다.
+SQL> SHOW USER
+USER은 "SCOTT"입니다
+SQL> SELECT * FROM USER_TAB_PRIVS_MADE;
+
+GRANTEE                        TABLE_NAME GRANTOR         PRIVILEGE            GRA HIE              
+------------------------------ ---------- --------------- -------------------- --- ---              
+LABUSER                        EMP        SCOTT           SELECT               NO  NO               
+
+경   과: 00:00:00.01
+SQL> COL OWNER FORMAT A10;
+SQL> COL TABLE_NAME FORMAT A10;
+SQL> COL GRANTEE FORMAT A15;
+SQL> COL GRANTOR FORMAT A15;
+SQL> COL PRIVILEGE FORMAT A20;
+SQL> SELECT * FROM USER_TAB_PRIVS_MADE;
+
+GRANTEE         TABLE_NAME GRANTOR         PRIVILEGE            GRA HIE                             
+--------------- ---------- --------------- -------------------- --- ---                             
+LABUSER         EMP        SCOTT           SELECT               NO  NO                              
+
+경   과: 00:00:00.01
+SQL> SELECT * FROM USER_TAB_PRIVS_RECD;
+
+선택된 레코드가 없습니다.
+
+경   과: 00:00:00.00
+SQL> SHOW USER
+USER은 "SCOTT"입니다
+SQL> SELECT * FROM USER_TAB_PRIVS_MADE;
+
+GRANTEE         TABLE_NAME GRANTOR         PRIVILEGE            GRA HIE                             
+--------------- ---------- --------------- -------------------- --- ---                             
+LABUSER         EMP        SCOTT           SELECT               NO  NO                              
+
+경   과: 00:00:00.01
+SQL> conn labuser/oracle_11g
+연결되었습니다.
+SQL> SHOW USER
+USER은 "LABUSER"입니다
+SQL> SELECT * FROM scott.emp;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7566 JONES      MANAGER         7839 81/04/02       2975                    20                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      MANAGER         7839 81/05/01       2850                    30                
+      7782 CLARK      MANAGER         7839 81/06/09       2450                    10                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+
+14 개의 행이 선택되었습니다.
+
+경   과: 00:00:00.01
+SQL> conn scott/oracle_11g
+연결되었습니다.
+SQL> SHOW USER
+USER은 "SCOTT"입니다
+SQL> REVOKE SELECT ON emp FROM labuser;
+
+권한이 취소되었습니다.
+
+경   과: 00:00:00.02
+SQL> SELECT * FROM USER_TAB_PRIVS_MADE;
+
+선택된 레코드가 없습니다.
+
+경   과: 00:00:00.00
+SQL> conn labuser/oracle_11g
+연결되었습니다.
+SQL> SHOW USER
+USER은 "LABUSER"입니다
+SQL> SELECT * FROM scott.emp;
+SELECT * FROM scott.emp
+                    *
+1행에 오류:
+ORA-00942: 테이블 또는 뷰가 존재하지 않습니다 
+
+
+경   과: 00:00:00.02
+SQL> SPOOL OFF

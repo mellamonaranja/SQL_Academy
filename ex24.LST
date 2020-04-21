@@ -1,0 +1,343 @@
+SQL> MERGE INTO emp10
+  2  USING emp11
+  3  ON(emp10.empno=emp11.empno)
+  4  WHEN MATCHED THEN
+  5  UPDATE SET emp10.ename=emp11.ename,
+  6  	emp10.job=emp11.job,
+  7  	emp10.mgr=emp11.mgr,
+  8  	emp10.hiredate=emp11.hiredate,
+  9  	emp10.sal=emp11.sal,
+ 10  	emp10.comm=emp11.comm,
+ 11  	emp10.deptno=emp11.deptno
+ 12  WHEN NOT MATCHED THEN
+ 13  INSERT VALUES(emp11.empno, emp11.ename, emp11.job,
+ 14  	emp11.mgr, emp11.hiredate, emp11.sal, emp11.comm,
+ 15  	emp11.deptno);
+
+4 행이 병합되었습니다.
+
+SQL> SELECT * FROM emp11;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7566 JONES      TEST            7839 81/04/02       2975                    20                
+      7698 BLAKE      TEST            7839 81/05/01       2850                    30                
+      7782 CLARK      TEST            7839 81/06/09       2450                    10                
+      8000 CODE       TOP             7566 19/12/18       1200         10         20                
+
+SQL> SELECT * FROM emp10;
+
+     EMPNO ENAME      JOB              MGR HIREDATE        SAL       COMM     DEPTNO                
+---------- ---------- --------- ---------- -------- ---------- ---------- ----------                
+      7369 SMITH      CLERK           7902 80/12/17        800                    20                
+      7499 ALLEN      SALESMAN        7698 81/02/20       1600        300         30                
+      7521 WARD       SALESMAN        7698 81/02/22       1250        500         30                
+      7566 JONES      TEST            7839 81/04/02       2975                    20                
+      7654 MARTIN     SALESMAN        7698 81/09/28       1250       1400         30                
+      7698 BLAKE      TEST            7839 81/05/01       2850                    30                
+      7782 CLARK      TEST            7839 81/06/09       2450                    10                
+      7788 SCOTT      ANALYST         7566 87/04/19       3000                    20                
+      7839 KING       PRESIDENT            81/11/17       5000                    10                
+      7844 TURNER     SALESMAN        7698 81/09/08       1500          0         30                
+      7876 ADAMS      CLERK           7788 87/05/23       1100                    20                
+      7900 JAMES      CLERK           7698 81/12/03        950                    30                
+      7902 FORD       ANALYST         7566 81/12/03       3000                    20                
+      7934 MILLER     CLERK           7782 82/01/23       1300                    10                
+      8000 CODE       TOP             7566 19/12/18       1200         10         20                
+
+15 개의 행이 선택되었습니다.
+
+SQL> CREATE TABLE dept07
+  2  AS SELECT * FROM dept;
+
+테이블이 생성되었습니다.
+
+SQL> DESC dept07;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ DEPTNO                                                         NUMBER(2)
+ DNAME                                                          VARCHAR2(14)
+ LOC                                                            VARCHAR2(13)
+
+SQL> SELECT * FROM dept07;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> DELETE FROM dept07;
+
+4 행이 삭제되었습니다.
+
+SQL> SELECT * FROM dept07;
+
+선택된 레코드가 없습니다.
+
+SQL> ROLLBACK;
+
+롤백이 완료되었습니다.
+
+SQL> SELECT * FROM dept07;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> DELETE FROM dept07 WHERE deptno=20;
+
+1 행이 삭제되었습니다.
+
+SQL> SELECT * FROM dept07;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> COMMIT;
+
+커밋이 완료되었습니다.
+
+SQL> ROLLBACK;
+
+롤백이 완료되었습니다.
+
+SQL> SELECT * FROM dept07;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> CREATE TABLE dept08
+  2  AS SELECT * FROM dept;
+
+테이블이 생성되었습니다.
+
+SQL> DESC dept08;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ DEPTNO                                                         NUMBER(2)
+ DNAME                                                          VARCHAR2(14)
+ LOC                                                            VARCHAR2(13)
+
+SQL> SELECT * FROM dept08;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> DELETE FROM dept08
+  2  WHERE deptno=40;
+
+1 행이 삭제되었습니다.
+
+SQL> SELECT * FROM dept08;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+
+SQL> CREATE TABLE dept09
+  2  AS SELECT * FROM dept;
+
+테이블이 생성되었습니다.
+
+SQL> DESC dept09;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ DEPTNO                                                         NUMBER(2)
+ DNAME                                                          VARCHAR2(14)
+ LOC                                                            VARCHAR2(13)
+
+SQL> SELECT * FROM dept09;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> ROLLBACK;
+
+롤백이 완료되었습니다.
+
+SQL> SELECT * FROM dept08;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+
+SQL> CREATE TABLE dept10
+  2  AS SELECT * FROM dept;
+
+테이블이 생성되었습니다.
+
+SQL> DESC dept10;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ DEPTNO                                                         NUMBER(2)
+ DNAME                                                          VARCHAR2(14)
+ LOC                                                            VARCHAR2(13)
+
+SQL> SELECT * FROM dept10;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> DELETE FROM dept10
+  2  WHERE deptno=20;
+
+1 행이 삭제되었습니다.
+
+SQL> SELECT * FROM dept10;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> TRUNCATE TABLE depttttttttt;
+TRUNCATE TABLE depttttttttt
+               *
+1행에 오류:
+ORA-00942: 테이블 또는 뷰가 존재하지 않습니다 
+
+
+SQL> ROLLBACK;
+
+롤백이 완료되었습니다.
+
+SQL> SELECT * FROM dept10;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> CREATE TABLE dept11
+  2  AS SELECT * FROM dept;
+
+테이블이 생성되었습니다.
+
+SQL> DESC dept11;
+ 이름                                                  널?      유형
+ ----------------------------------------------------- -------- ------------------------------------
+ DEPTNO                                                         NUMBER(2)
+ DNAME                                                          VARCHAR2(14)
+ LOC                                                            VARCHAR2(13)
+
+SQL> SELECT * FROM dept11;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        30 SALES          CHICAGO                                                                   
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> DELETE FROM dept11
+  2  WHERE deptno=30;
+
+1 행이 삭제되었습니다.
+
+SQL> COMMIT;
+
+커밋이 완료되었습니다.
+
+SQL> DELETE FROM dept11
+  2  WHERE deptno=40;
+
+1 행이 삭제되었습니다.
+
+SQL> SELECT * FROM dept11;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+
+SQL> SAVEPOINT sp1;
+
+저장점이 생성되었습니다.
+
+SQL> DELETE FROM dept11
+  2  WHERE deptno=20;
+
+1 행이 삭제되었습니다.
+
+SQL> SELECT * FROM dept11;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+
+SQL> SAVEPOINT sp2;
+
+저장점이 생성되었습니다.
+
+SQL> DELETE FROM dept11
+  2  WHERE deptno=10;
+
+1 행이 삭제되었습니다.
+
+SQL> SELECT * FROM dept11;
+
+선택된 레코드가 없습니다.
+
+SQL> ROLLBACK TO sp2;
+
+롤백이 완료되었습니다.
+
+SQL> SELECT * FROM dept11;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+
+SQL> ROLLBACK TO sp1;
+
+롤백이 완료되었습니다.
+
+SQL> SELECT * FROM dept11;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+
+SQL> ROLLBACK;
+
+롤백이 완료되었습니다.
+
+SQL> SELECT * FROM dept11;
+
+    DEPTNO DNAME          LOC                                                                       
+---------- -------------- -------------                                                             
+        10 ACCOUNTING     NEW YORK                                                                  
+        20 RESEARCH       DALLAS                                                                    
+        40 OPERATIONS     BOSTON                                                                    
+
+SQL> SPOOL OFF
